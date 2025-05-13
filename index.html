@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPG Companion</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Meu Companion de RPG</h1>
+        <nav>
+            <button class="nav-button" data-target="dice-roller-section">Rolador de Dados</button>
+            <button class="nav-button" data-target="character-sheet-section">Ficha de Personagem</button>
+            <button class="nav-button" data-target="in-game-companion-section">Companion em Jogo</button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="dice-roller-section" class="active-section">
+            <h2>Rolador de Dados</h2>
+            <div>
+                <label for="numDice">Quantidade:</label>
+                <input type="number" id="numDice" value="1" min="1">
+                <label for="diceType">Tipo:</label>
+                <select id="diceType">
+                    <option value="4">d4</option>
+                    <option value="6">d6</option>
+                    <option value="8">d8</option>
+                    <option value="10">d10</option>
+                    <option value="12">d12</option>
+                    <option value="20">d20</option>
+                    <option value="100">d100</option>
+                </select>
+                <button id="rollButton">Rolar!</button>
+            </div>
+            <div id="dice-results">
+                <p>Resultado: <span id="totalResult">--</span></p>
+                <p>Rolagens Individuais: <span id="individualRolls">--</span></p>
+            </div>
+        </section>
+
+        <section id="character-sheet-section" class="hidden-section">
+            <h2>Ficha de Personagem (D&D 5e)</h2>
+            <!-- Implementação dos botões de save -->
+            <div class="character-actions">
+                <button id="saveCharacterButton">Salvar Personagem</button>
+                <button id="loadCharacterButton">Carregar Personagem</button>
+                <button id="newCharacterButton">Novo Personagem (Limpar Ficha)</button>
+            </div>
+            <!-- Cabeçalho da Ficha -->
+            <div class="character-header grid-container character-info-grid">
+                <div class="form-group">
+                    <label for="charName">Nome do Personagem:</label>
+                    <input type="text" id="charName" name="charName">
+                </div>
+                <div class="form-group">
+                    <label for="charClassLevel">Classe & Nível:</label>
+                    <input type="text" id="charClassLevel" name="charClassLevel">
+                </div>
+                <div class="form-group">
+                    <label for="charBackground">Antecedente:</label>
+                    <input type="text" id="charBackground" name="charBackground">
+                </div>
+                <div class="form-group">
+                    <label for="playerName">Nome do Jogador:</label>
+                    <input type="text" id="playerName" name="playerName">
+                </div>
+                <div class="form-group">
+                    <label for="charRace">Raça:</label>
+                    <input type="text" id="charRace" name="charRace">
+                </div>
+                <div class="form-group">
+                    <label for="charAlignment">Alinhamento:</label>
+                    <input type="text" id="charAlignment" name="charAlignment">
+                </div>
+                <div class="form-group">
+                    <label for="charExperience">Pontos de Experiência:</label>
+                    <input type="number" id="charExperience" name="charExperience">
+                </div>
+            </div>
+
+            <!-- Coluna da Esquerda: Atributos, Perícias, etc. -->
+            <div class="character-main-content grid-container character-layout-grid">
+                <div class="column-left">
+                    <!-- Atributos -->
+                    <div class="attributes-section box">
+                        <h3>Atributos</h3>
+                        <div class="attribute">
+                            <label for="strengthScore">Força</label>
+                            <input type="number" id="strengthScore" name="strengthScore" class="attr-score">
+                            <span id="strengthMod" class="attr-mod"></span>
+                        </div>
+                        <div class="attribute">
+                            <label for="dexterityScore">Destreza</label>
+                            <input type="number" id="dexterityScore" name="dexterityScore" class="attr-score">
+                            <span id="dexterityMod" class="attr-mod"></span>
+                        </div>
+                        <div class="attribute">
+                            <label for="constitutionScore">Constituição</label>
+                            <input type="number" id="constitutionScore" name="constitutionScore" class="attr-score">
+                            <span id="constitutionMod" class="attr-mod"></span>
+                        </div>
+                        <div class="attribute">
+                            <label for="intelligenceScore">Inteligência</label>
+                            <input type="number" id="intelligenceScore" name="intelligenceScore" class="attr-score">
+                            <span id="intelligenceMod" class="attr-mod"></span>
+                        </div>
+                        <div class="attribute">
+                            <label for="wisdomScore">Sabedoria</label>
+                            <input type="number" id="wisdomScore" name="wisdomScore" class="attr-score">
+                            <span id="wisdomMod" class="attr-mod"></span>
+                        </div>
+                        <div class="attribute">
+                            <label for="charismaScore">Carisma</label>
+                            <input type="number" id="charismaScore" name="charismaScore" class="attr-score">
+                            <span id="charismaMod" class="attr-mod"></span>
+                        </div>
+                    </div>
+
+                    <div class="inspiration-prof-bonus box">
+                        <div class="form-group">
+                            <label for="inspiration">Inspiração</label>
+                            <input type="number" id="inspiration" name="inspiration">
+                        </div>
+                        <div class="form-group">
+                            <label for="proficiencyBonus">Bônus de Proficiência</label>
+                            <input type="number" id="proficiencyBonus" name="proficiencyBonus" readonly> <!-- Será calculado -->
+                        </div>
+                    </div>
+
+                    <!-- Salvaguardas -->
+                    <div class="saving-throws-section box">
+                        <h3>Salvaguardas</h3>
+                        <!-- Exemplo: Força -->
+                        <div class="save-throw">
+                            <input type="checkbox" id="strSaveProf" name="strSaveProf" class="prof-checkbox">
+                            <span id="strSaveMod" class="save-mod"></span>
+                            <label for="strSaveProf">Força</label>
+                        </div>
+                        <div class="save-throw">
+                            <input type="checkbox" id="dexSaveProf" name="dexSaveProf" class="prof-checkbox">
+                            <span id="dexSaveMod" class="save-mod"></span>
+                            <label for="dexSaveProf">Destreza</label>
+                        </div>
+                        <div class="save-throw">
+                            <input type="checkbox" id="conSaveProf" name="conSaveProf" class="prof-checkbox">
+                            <span id="conSaveMod" class="save-mod"></span>
+                            <label for="conSaveProf">Constituição</label>
+                        </div>
+                        <div class="save-throw">
+                            <input type="checkbox" id="intSaveProf" name="intSaveProf" class="prof-checkbox">
+                            <span id="intSaveMod" class="save-mod"></span>
+                            <label for="intSaveProf">Inteligência</label>
+                        </div>
+                        <div class="save-throw">
+                            <input type="checkbox" id="wisSaveProf" name="wisSaveProf" class="prof-checkbox">
+                            <span id="wisSaveMod" class="save-mod"></span>
+                            <label for="wisSaveProf">Sabedoria</label>
+                        </div>
+                        <div class="save-throw">
+                            <input type="checkbox" id="chaSaveProf" name="chaSaveProf" class="prof-checkbox">
+                            <span id="chaSaveMod" class="save-mod"></span>
+                            <label for="chaSaveProf">Carisma</label>
+                        </div>
+                    </div>
+
+                    <!-- Perícias -->
+                    <div class="skills-section box">
+                        <h3>Perícias</h3>
+                        <div class="skill">
+                            <input type="checkbox" id="acrobaticsProf" name="acrobaticsProf" class="prof-checkbox">
+                            <span id="acrobaticsMod" class="skill-mod"></span>
+                            <label for="acrobaticsProf">Acrobacia (Des)</label>
+                        </div>
+                        <div class="skill">
+                            <input type="checkbox" id="animalHandlingProf" name="animalHandlingProf" class="prof-checkbox">
+                            <span id="animalHandlingMod" class="skill-mod"></span>
+                            <label for="animalHandlingProf">Lidar com Animais (Sab)</label>
+                        </div>
+                        <div class="skill">
+                            <input type="checkbox" id="arcanaProf" name="arcanaProf" class="prof-checkbox">
+                            <span id="arcanaMod" class="skill-mod"></span>
+                            <label for="arcanaProf">Arcanismo (Int)</label>
+                        </div>
+                        <div class="skill">
+                            <input type="checkbox" id="athleticsProf" name="athleticsProf" class="prof-checkbox">
+                            <span id="athleticsMod" class="skill-mod"></span>
+                            <label for="athleticsProf">Atletismo (For)</label>
+                        </div>
+                        <div class="skill">
+                            <input type="checkbox" id="deceptionProf" name="deceptionProf" class="prof-checkbox">
+                            <span id="deceptionMod" class="skill-mod"></span>
+                            <label for="deceptionProf">Enganação (Car)</label>
+                        </div>
+                        <div class="skill">
+                            <input type="checkbox" id="historyProf" name="historyProf" class="prof-checkbox">
+                            <span id="historyMod" class="skill-mod"></span>
+                            <label for="historyProf">História (Int)</label>
+                        </div>
+                        <div class="skill">
+                            <input type="checkbox" id="insightProf" name="insightProf" class="prof-checkbox">
+                            <span id="insightMod" class="skill-mod"></span>
+                            <label for="insightProf">Intuição (Sab)</label>
+                        </div>
+                        <div class="skill">
+                            <input type="checkbox" id="intimidationProf" name="intimidationProf" class="prof-checkbox">
+                            <span id="intimidationMod" class="skill-mod"></span>
+                            <label for="intimidationProf">Intimidação (Car)</label>
+                        </div>
+                        <div class="skill">
+                            <input type="checkbox" id="investigationProf" name="investigationProf" class="prof-checkbox">
+                            <span id="investigationMod" class="skill-mod"></span>
+                            <label for="investigationProf">Investigação (Int)</label>
+                        </div>
+                        <div class="skill">
+                            <input type="checkbox" id="medicineProf" name="medicineProf" class="prof-checkbox">
+                            <span id="medicineMod" class="skill-mod"></span>
+                            <label for="medicineProf">Medicina (Sab)</label>
+                        </div>
+                        <div class="skill">
+                            <input type="checkbox" id="natureProf" name="natureProf" class="prof-checkbox">
+                            <span id="natureMod" class="skill-mod"></span>
+                            <label for="natureProf">Natureza (Int)</label>
+                        </div>
+                        <div class="skill">
+                            <input type="checkbox" id="perceptionProf" name="perceptionProf" class="prof-checkbox">
+                            <span id="perceptionMod" class="skill-mod"></span>
+                            <label for="perceptionProf">Percepção (Sab)</label>
+                        </div>
+                        <div class="skill">
+                            <input type="checkbox" id="performanceProf" name="performanceProf" class="prof-checkbox">
+                            <span id="performanceMod" class="skill-mod"></span>
+                            <label for="performanceProf">Atuação (Car)</label>
+                        </div>
+                        <div class="skill">
+                            <input type="checkbox" id="persuasionProf" name="persuasionProf" class="prof-checkbox">
+                            <span id="persuasionMod" class="skill-mod"></span>
+                            <label for="persuasionProf">Persuasão (Car)</label>
+                        </div>
+                        <div class="skill">
+                            <input type="checkbox" id="religionProf" name="religionProf" class="prof-checkbox">
+                            <span id="religionMod" class="skill-mod"></span>
+                            <label for="religionProf">Religião (Int)</label>
+                        </div>
+                        <div class="skill">
+                            <input type="checkbox" id="sleightOfHandProf" name="sleightOfHandProf" class="prof-checkbox">
+                            <span id="sleightOfHandMod" class="skill-mod"></span>
+                            <label for="sleightOfHandProf">Prestidigitação (Des)</label>
+                        </div>
+                        <div class="skill">
+                            <input type="checkbox" id="stealthProf" name="stealthProf" class="prof-checkbox">
+                            <span id="stealthMod" class="skill-mod"></span>
+                            <label for="stealthProf">Furtividade (Des)</label>
+                        </div>
+                        <div class="skill">
+                            <input type="checkbox" id="survivalProf" name="survivalProf" class="prof-checkbox">
+                            <span id="survivalMod" class="skill-mod"></span>
+                            <label for="survivalProf">Sobrevivência (Sab)</label>
+                        </div>
+                    </div>
+                     <div class="passive-perception box">
+                        <label for="passiveWisdom">Sabedoria Passiva (Percepção)</label>
+                        <input type="number" id="passiveWisdom" name="passiveWisdom" readonly> <!-- Será calculado -->
+                    </div>
+                </div>
+
+                <!-- Coluna do Meio: Combate, PV, etc. -->
+                <div class="column-center">
+                    <div class="combat-stats-box box">
+                        <div class="form-group combat-stat">
+                            <label for="armorClass">Classe de Armadura</label>
+                            <input type="number" id="armorClass" name="armorClass">
+                        </div>
+                        <div class="form-group combat-stat">
+                            <label for="initiative">Iniciativa</label>
+                            <input type="text" id="initiative" name="initiative" readonly> <!-- Será calculado -->
+                        </div>
+                        <div class="form-group combat-stat">
+                            <label for="speed">Deslocamento</label>
+                            <input type="text" id="speed" name="speed">
+                        </div>
+                    </div>
+
+                    <div class="hit-points-box box">
+                        <h3>Pontos de Vida</h3>
+                        <div class="form-group">
+                            <label for="hpMax">PV Máximos</label>
+                            <input type="number" id="hpMax" name="hpMax">
+                        </div>
+                        <div class="form-group">
+                            <label for="hpCurrent">PV Atuais</label>
+                            <input type="number" id="hpCurrent" name="hpCurrent">
+                        </div>
+                        <div class="form-group">
+                            <label for="hpTemp">PV Temporários</label>
+                            <input type="number" id="hpTemp" name="hpTemp">
+                        </div>
+                    </div>
+
+                    <div class="hit-dice-death-saves-box box">
+                        <div class="form-group">
+                            <label for="hitDiceTotal">Dados de Vida (Total)</label>
+                            <input type="text" id="hitDiceTotal" name="hitDiceTotal"> <!-- Ex: 3d8 -->
+                        </div>
+                        <div class="form-group">
+                             <label for="hitDiceCurrent">Dados de Vida (Atuais)</label>
+                            <input type="text" id="hitDiceCurrent" name="hitDiceCurrent"> <!-- Será mais fácil de gerenciar com JS -->
+                        </div>
+                        <div class="death-saves">
+                            <h4>Salvaguardas Contra Morte</h4>
+                            <label>Sucessos:</label>
+                            <input type="checkbox" name="deathSaveSuccess1">
+                            <input type="checkbox" name="deathSaveSuccess2">
+                            <input type="checkbox" name="deathSaveSuccess3">
+                            <br>
+                            <label>Falhas:</label>
+                            <input type="checkbox" name="deathSaveFail1">
+                            <input type="checkbox" name="deathSaveFail2">
+                            <input type="checkbox" name="deathSaveFail3">
+                        </div>
+                    </div>
+
+                    <div class="attacks-spellcasting-box box">
+                        <h3>Ataques & Conjuração</h3>
+                        <textarea id="attacksSpells" name="attacksSpells" rows="10" placeholder="Nome      Bônus Ataque      Dano/Tipo"></textarea>
+                    </div>
+                </div>
+
+                <!-- Coluna da Direita: Personalidade, Equipamento, etc. -->
+                <div class="column-right">
+                    <div class="personality-box box">
+                        <div class="form-group">
+                            <label for="personalityTraits">Traços de Personalidade</label>
+                            <textarea id="personalityTraits" name="personalityTraits" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="ideals">Ideais</label>
+                            <textarea id="ideals" name="ideals" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="bonds">Vínculos</label>
+                            <textarea id="bonds" name="bonds" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="flaws">Fraquezas</label>
+                            <textarea id="flaws" name="flaws" rows="3"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="features-traits-box box">
+                        <h3>Características & Talentos</h3>
+                        <textarea id="featuresTraits" name="featuresTraits" rows="10"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rodapé da Ficha -->
+            <div class="character-footer grid-container character-footer-grid">
+                 <div class="other-proficiencies-box box">
+                    <h3>Outras Proficiências & Idiomas</h3>
+                    <textarea id="otherProficiencies" name="otherProficiencies" rows="5"></textarea>
+                </div>
+                <div class="equipment-box box">
+                    <h3>Equipamento</h3>
+                     <div class="currency">
+                        <label for="cp">PC</label><input type="number" id="cp" name="cp">
+                        <label for="sp">PP</label><input type="number" id="sp" name="sp">
+                        <label for="ep">PE</label><input type="number" id="ep" name="ep">
+                        <label for="gp">PO</label><input type="number" id="gp" name="gp">
+                        <label for="pp">PL</label><input type="number" id="pp" name="pp">
+                    </div>
+                    <textarea id="equipmentList" name="equipmentList" rows="5" placeholder="Lista de outros equipamentos..."></textarea>
+                </div>
+            </div>
+
+            <!-- Campos da SEGUNDA PÁGINA da ficha (opcional por agora, podemos adicionar depois) -->
+            <!-- <div class="character-appearance-story box"> ... </div> -->
+            <!-- Campos da TERCEIRA PÁGINA da ficha (Magias - opcional por agora) -->
+            <!-- <div class="character-spells box"> ... </div> -->
+
+        </section>
+                
+        <section id="in-game-companion-section" class="hidden-section">
+            <h2>Companion em Jogo</h2>
+            <div id="companionStatus" class="box">
+                <p>Carregue um personagem na aba "Ficha de Personagem" para usar o companion.</p>
+            </div>
+
+            <div id="companionControls" class="companion-layout-b" style="display: none;"> <!-- Escondido até um personagem ser carregado -->
+
+                <!-- Top Bar: Info Rápida -->
+                <div class="comp-top-bar box">
+                    <span id="companionTopName" class="comp-char-name">Nome</span> -
+                    CA: <span id="companionTopAC" class="comp-value">--</span> -
+                    Desl: <span id="companionTopSpeed" class="comp-value">--</span>
+                </div>
+
+                <!-- Status Central: PVs -->
+                <div class="comp-status-center box">
+                    <div class="comp-hp-display">
+                        <span class="comp-label">PV Atuais / Máximos</span>
+                        <div>
+                            <span id="companionCurrentHP" class="comp-hp-large">--</span> / <span id="companionMaxHP" class="comp-hp-large">--</span>
+                        </div>
+                    </div>
+                    <div class="comp-temphp-display">
+                        <span class="comp-label">PV Temporários</span>
+                        <div>
+                            <span id="companionTempHP" class="comp-hp-large">--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Barra de Ações 1: Dano, Cura, PV Temp -->
+                <div class="comp-action-bar box">
+                    <div class="hp-actions">
+                        <label for="hpChangeValue">Dano/Cura:</label>
+                        <input type="number" id="hpChangeValue" placeholder="Valor" min="0">
+                        <button id="applyDamageButton">Dano</button>
+                        <button id="applyHealingButton">Cura</button>
+                    </div>
+                    <div class="temp-hp-actions">
+                        <label for="tempHpValue">PV Temp:</label>
+                        <input type="number" id="tempHpValue" placeholder="Valor" min="0">
+                        <button id="addTempHpButton">Add/Set</button>
+                        <button id="removeTempHpButton" style="display:none;">Remover</button>
+                    </div>
+                </div>
+
+                <!-- Barra de Ações 2: Rolador Rápido, Dados Vida, Death Saves -->
+                <div class="comp-action-bar box">
+                    <!-- Mini Rolador -->
+                    <div class="dice-roller-actions">
+                        <label>Rolar:</label>
+                        <button class="comp-dice-button" data-die="4">d4</button>
+                        <button class="comp-dice-button" data-die="6">d6</button>
+                        <button class="comp-dice-button" data-die="8">d8</button>
+                        <button class="comp-dice-button" data-die="10">d10</button>
+                        <button class="comp-dice-button" data-die="12">d12</button>
+                        <button class="comp-dice-button" data-die="20">d20</button>
+                        <span class="comp-dice-result-label">Resultado:</span>
+                        <span id="companionDiceResult" class="comp-value comp-dice-result">--</span>
+                    </div>
+                    <!-- Dados de Vida -->
+                    <div class="hit-dice-actions">
+                        <label for="hitDiceToSpend">Gastar DV:</label>
+                        <input type="number" id="hitDiceToSpend" min="1" value="1" style="width: 50px;">
+                        <select id="hitDiceTypeSpend"></select>
+                        <button id="spendHitDiceButton">Gastar</button>
+                        <span id="hitDiceHealResult" class="comp-value"></span>
+                    </div>
+                    <!-- Death Saves -->
+                    <div class="death-saves">
+                        <label>Contra Morte:</label>
+                        S: <input type="checkbox" id="compDeathSaveSuccess1" class="comp-ds">
+                        <input type="checkbox" id="compDeathSaveSuccess2" class="comp-ds">
+                        <input type="checkbox" id="compDeathSaveSuccess3" class="comp-ds">
+                        | F: <input type="checkbox" id="compDeathSaveFail1" class="comp-ds">
+                            <input type="checkbox" id="compDeathSaveFail2" class="comp-ds">
+                            <input type="checkbox" id="compDeathSaveFail3" class="comp-ds">
+                    </div>
+                </div>
+
+                <!-- Botão Salvar -->
+                <div class="comp-save-area">
+                    <button id="saveCompanionChangesButton">Salvar Mudanças na Ficha</button>
+                </div>
+
+            </div> <!-- Fim de #companionControls -->
+        </section>
+
+    </main>
+
+    <footer>
+        <p>© 2023 RPG DOS CRIA</p>
+    </footer>
+
+    <script src="js/diceRoller.js"></script>
+    <script src="js/app.js"></script> 
+    <script src="js/character.js"></script>
+</body>
+</html>
