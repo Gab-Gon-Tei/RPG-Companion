@@ -1,0 +1,27 @@
+
+{
+  "intro": {
+    "title": "Bem-vindo à Radiant Haven!",
+    "htmlContent": "<p>Use a barra lateral para navegar entre as diferentes categorias e tópicos de referência.</p><p>Este espaço é dedicado a informações sobre o sistema de jogo, o mundo da campanha, regras específicas da mesa, etc.</p><p>O conteúdo completo será adicionado em breve. Por enquanto, veja os exemplos:</p>"
+  },
+  "basic-rules": {
+    "title": "Regras Básicas",
+    "htmlContent": "<p><strong>Inserir regras aqui</strong> "
+  },
+  "world-lore": {
+    "title": "O Mundo de Jogo)",
+    "htmlContent": "<p>Eldoria é um reino antigo..."
+  },
+   "classes": {
+    "title": "Classes Comuns",
+    "htmlContent": "<p>Aqui estão algumas classes que podem ser encontradas em Radiant Haven:</p><ul><li>Aries: Mestres em diversas armas e armaduras.</li><li>Peixes: Conjuradores que estudam grimórios antigos.</li><li>Gêmeos: Especialistas em furtividade e trapaças.</li><li>Câncer: Servos dos deuses, capazes de curar e defender.</li></ul><!-- Adicione mais sobre classes aqui -->"
+  },
+    "combat": {
+    "title": "Combate",
+    "htmlContent": "<p>Defina as regras de combate...</p>"
+  },
+   "skills-saves": {
+    "title": "Perícias e Salvaguardas",
+    "htmlContent": "<p>Perícias são usadas para testes de habilidade fora de combate (Acrobacia, Furtividade, História...). Salvaguardas são para resistir a efeitos nocivos (magias, venenos, armadilhas). d20 + modificador de atributo + proficiência (se aplicável).</p><!-- Adicione mais sobre perícias e salvaguardas aqui -->"
+  }
+}
