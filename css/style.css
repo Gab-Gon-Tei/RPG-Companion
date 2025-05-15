@@ -727,3 +727,8 @@ footer {
         padding: 5px 8px; /* Menos padding para sub-links responsivos */
      }
 }
+
+/* Adicionar ou modificar no seu style.css */
+.wiki-sidebar .submenu.hidden {
+    display: none !important; /* Adicione !important para teste */
+}
