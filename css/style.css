@@ -439,7 +439,7 @@ footer {
 }
 
 
-/* Opcional: Ajustes ainda menores para smartphones (ex: largura < 480px) */
+/*Ajustes ainda menores para smartphones (ex: largura < 480px) */
 @media (max-width: 480px) {
     header h1 {
         font-size: 1.8em;
@@ -495,4 +495,117 @@ footer {
          flex-direction: column;
          align-items: center;
      }
+}
+
+/* Estilos para a Seção Wiki */
+#wiki-section .wiki-container {
+    display: flex; /* Habilita flexbox para layout lado a lado */
+    gap: 20px; /* Espaço entre a barra lateral e o conteúdo */
+    flex-wrap: wrap; /* Permite quebrar linha em telas menores */
+}
+
+.wiki-sidebar {
+    flex: 0 0 250px; /* Não cresce, não encolhe, largura base de 250px */
+    /* Os estilos .box já dão padding, borda, etc. */
+    align-self: flex-start; /* Alinha o topo da sidebar com o topo do container flex */
+}
+
+.wiki-sidebar h3 {
+    font-family: var(--fonte-corpo); /* Usar fonte de corpo para subtítulos da sidebar */
+    font-size: 1.2em;
+    border-bottom: 1px solid var(--cor-bordas);
+    padding-bottom: 5px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+.wiki-sidebar h3:first-child {
+     margin-top: 0; /* Remove margem superior do primeiro h3 */
+}
+
+
+.wiki-sidebar ul {
+    list-style: none; /* Remove marcadores de lista padrão */
+    padding: 0;
+    margin: 0;
+}
+
+.wiki-sidebar li {
+    margin-bottom: 5px;
+}
+
+.wiki-sidebar a {
+    display: block; /* Faz o link ocupar toda a largura do item da lista */
+    padding: 8px 10px;
+    text-decoration: none;
+    color: var(--cor-texto-principal);
+    background-color: var(--cor-fundo-principal); /* Fundo claro para links */
+    border: 1px solid var(--cor-input-borda);
+    border-radius: 4px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.wiki-sidebar a:hover {
+    background-color: var(--cor-input-borda);
+    color: var(--cor-texto-principal);
+}
+
+.wiki-sidebar a.active {
+    background-color: var(--cor-destaque1); /* Cor de destaque para o link ativo */
+    color: var(--cor-fundo-principal);
+    font-weight: bold;
+    border-color: var(--cor-destaque1);
+}
+
+
+.wiki-content {
+    flex: 1; /* Ocupa o espaço restante */
+    /* Os estilos .box já dão padding, borda, etc. */
+}
+
+.wiki-topic-content {
+    margin-bottom: 20px;
+    /* Os estilos .hidden e .active abaixo controlarão a exibição */
+}
+
+/* Controla qual tópico da Wiki é visível */
+.wiki-topic-content.hidden {
+    display: none;
+}
+
+.wiki-topic-content.active {
+    display: block; /* Ou o display que faz sentido para o conteúdo (block, flex, grid) */
+}
+
+
+/* --- Estilos Responsivos (dentro do @media) --- */
+@media (max-width: 768px) {
+    /* ... (Estilos responsivos existentes) ... */
+
+    /* Ajustes para a Wiki em telas menores */
+    #wiki-section .wiki-container {
+        flex-direction: column; /* Empilha a barra lateral e o conteúdo */
+    }
+
+    .wiki-sidebar {
+        flex-basis: auto; /* Remove a largura fixa */
+        width: 100%; /* Ocupa a largura total */
+    }
+    .wiki-sidebar ul {
+        display: flex; /* Usa flexbox para os links da sidebar */
+        flex-wrap: wrap; /* Permite que os links quebrem linha */
+        gap: 5px; /* Espaço entre os links */
+        justify-content: center; /* Centraliza os links */
+    }
+    .wiki-sidebar li {
+        margin-bottom: 0; /* Remove margem inferior dos itens da lista flex */
+        flex-basis: auto; /* Permite que os links se ajustem ao conteúdo */
+    }
+     .wiki-sidebar a {
+        padding: 5px 8px; /* Padding menor nos links da sidebar */
+     }
+
+    .wiki-content {
+        flex-basis: auto; /* Remove a base flex */
+        width: 100%; /* Ocupa a largura total */
+    }
 }
