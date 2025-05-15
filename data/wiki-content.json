@@ -23,5 +23,10 @@
    "skills-saves": {
     "title": "Perícias e Salvaguardas",
     "htmlContent": "<p>Perícias são usadas para testes de habilidade fora de combate (Acrobacia, Furtividade, História...). Salvaguardas são para resistir a efeitos nocivos (magias, venenos, armadilhas). d20 + modificador de atributo + proficiência (se aplicável).</p><!-- Adicione mais sobre perícias e salvaguardas aqui -->"
+  },
+  
+   "barbarian": {
+    "title": "Bárbaro",
+    "htmlContent": "<p>Os Bárbaros são conhecidos pelo seu fogo e sua feroz vontade de obliterar qualquer inimigo diante deles.</p><p>Habitam a sede do Reino de Fogo, Flamen. São os mais corajosos, e talvez os mais precipitados de todos.</p><p>Habilidades de Classe:</p><p>Fúria - Concede rolagem dupla de dados</p><p>Colateral: A pele, embarcada pela fúria, faz o sangue ferver e seus olhos esbugalharem, perde 1HP por rodada em fúria</p><p>Level 3: Punhos de fogo: causa 1d4 de dano - Uma pequena áurea de chama alaranjada exala de suas mãos, fazendo com que o aventureiro use as à sua arma equipada, ou que ele consiga iluminar o local um pouco.</p><p>Level 5: Arma Elemental: causa 1d6 de dano - O aventureiro é capaz de conjurar uma arma de fogo, que este manejara com habilidade, como se fosse sua própria mão, pontos de carisma ou de sabedoria podem ser adicionados ao ataque.</p>"                                    
   }
 }

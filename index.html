@@ -479,29 +479,68 @@
             <div class="wiki-container">
 
                 <div class="wiki-sidebar box">
-                    <h3>Categorias</h3>
+                    <h3>Conteúdo</h3>
                     <ul>
-                        <!-- Agora os links usarão data-content-id que correspondem às chaves do JSON -->
+                        <!-- Item Principal (simples) -->
                         <li><a href="#" class="wiki-link active" data-content-id="intro">Introdução</a></li>
-                        <li><a href="#" class="wiki-link" data-content-id="basic-rules">Regras Básicas (Exemplo)</a></li>
-                        <li><a href="#" class="wiki-link" data-content-id="world-lore">O Mundo de Jogo (Exemplo)</a></li>
-                        <li><a href="#" class="wiki-link" data-content-id="classes">Classes Comuns (Exemplo)</a></li>
-                        <!-- Adicione mais links aqui, data-content-id deve bater com a chave no JSON -->
+
+                        <!-- Item Principal com Sub-menu -->
+                        <li class="has-submenu"> <!-- Adiciona classe para indicar que tem sub-menu -->
+                            <div class="submenu-header"> <!-- Container para o link e o toggle -->
+                                <a href="#" class="wiki-link" data-content-id="basic-rules">Regras Básicas</a>
+                                <button class="submenu-toggle">+</button> <!-- Botão para expandir/recolher -->
+                            </div>
+                            <ul class="submenu hidden"> <!-- A sub-lista, escondida por padrão -->
+                                <li><a href="#" class="wiki-link" data-content-id="basic-rules-overview">Visão Geral</a></li>
+                                <li><a href="#" class="wiki-link" data-content-id="ability-checks">Testes de Habilidade</a></li>
+                                <li><a href="#" class="wiki-link" data-content-id="saving-throws">Salvaguardas</a></li>
+                                <li><a href="#" class="wiki-link" data-content-id="advantage-disadvantage">Vantagem/Desvantagem</a></li>
+                                <!-- Mais links de sub-tópicos aqui, data-content-id = chave no JSON -->
+                            </ul>
+                        </li>
+
+                        <!-- Outro Item Principal (simples) -->
+                        <li><a href="#" class="wiki-link" data-content-id="combat">Combate</a></li>
+
+                        <!-- Outro Item Principal com Sub-menu -->
+                        <li class="has-submenu">
+                            <div class="submenu-header">
+                                <a href="#" class="wiki-link" data-content-id="classes-intro">Classes</a>
+                                <button class="submenu-toggle">+</button>
+                            </div>
+                            <ul class="submenu hidden">
+                                <li><a href="#" class="wiki-link" data-content-id="barbarian">Bárbaro</a></li>
+                                <li><a href="#" class="wiki-link" data-content-id="bard">Bardo</a></li>
+                                <li><a href="#" class="wiki-link" data-content-id="cleric">Clérigo</a></li>
+                                <li><a href="#" class="wiki-link" data-content-id="druid">Druida</a></li>
+                                <li><a href="#" class="wiki-link" data-content-id="fighter">Guerreiro</a></li>
+                                <li><a href="#" class="wiki-link" data-content-id="monk">Monge</a></li>
+                                <li><a href="#" class="wiki-link" data-content-id="paladin">Paladino</a></li>
+                                <li><a href="#" class="wiki-link" data-content-id="ranger">Guardião</a></li>
+                                <li><a href="#" class="wiki-link" data-content-id="rogue">Ladino</a></li>
+                                <li><a href="#" class="wiki-link" data-content-id="sorcerer">Feiticeiro</a></li>
+                                <li><a href="#" class="wiki-link" data-content-id="warlock">Bruxo</a></li>
+                                <li><a href="#" class="wiki-link" data-content-id="wizard">Mago</a></li>
+                                <!-- Adicione mais links de classes aqui -->
+                            </ul>
+                        </li>
+
+                        <!-- Exemplo: Mundo de Jogo -->
+                        <li><a href="#" class="wiki-link" data-content-id="world-lore">O Mundo de Jogo</a></li>
+
+
+                        <!-- Adicione mais itens principais e sub-menus conforme necessário -->
                     </ul>
 
-                    <h3>Mecânicas Comuns</h3>
-                    <ul>
-                        <li><a href="#" class="wiki-link" data-content-id="combat">Combate</a></li>
-                        <li><a href="#" class="wiki-link" data-content-id="skills-saves">Perícias e Salvaguardas</a></li>
-                        <!-- Mais links -->
-                    </ul>
+                    <!-- Opcional: Remover o subtítulo "Mecânicas Comuns" se usar categorias principais -->
+                    <!-- <h3>Mecânicas Comuns</h3> -->
+                    <!-- <ul> ... </ul> -->
+
                 </div>
 
-                <div class="wiki-content box"> <!-- Área de Conteúdo -->
-                    <!-- Adicionar um título dinâmico e uma área para o conteúdo HTML -->
+                <div class="wiki-content box">
                     <h3 id="wiki-topic-title">Carregando...</h3>
                     <div id="wiki-topic-html-content">
-                        <!-- Conteúdo será carregado aqui pelo JavaScript -->
                         <p>Por favor, aguarde enquanto o conteúdo da wiki é carregado, ou selecione um tópico na barra lateral.</p>
                     </div>
                 </div>

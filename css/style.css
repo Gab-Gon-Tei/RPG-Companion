@@ -609,3 +609,121 @@ footer {
         width: 100%; /* Ocupa a largura total */
     }
 }
+
+/* Estilos para a Sidebar com Sub-menus */
+.wiki-sidebar ul ul { /* Estilos para sub-listas aninhadas */
+    padding-left: 15px; /* Indentação para sub-itens */
+    margin-top: 5px; /* Espaço acima da sub-lista */
+    border-left: 2px solid rgba(139, 90, 43, 0.3); /* Linha sutil indicando aninhamento */
+}
+
+.wiki-sidebar li {
+     margin-bottom: 3px; /* Espaço menor entre itens da lista */
+}
+
+/* Estilos para o container do link principal + toggle */
+.wiki-sidebar .submenu-header {
+    display: flex; /* Para alinhar o link e o botão toggle */
+    align-items: center;
+    justify-content: space-between; /* Espaça link e botão */
+     margin-bottom: 3px; /* Espaço abaixo do header */
+}
+
+.wiki-sidebar .submenu-header .wiki-link {
+    flex-grow: 1; /* Permite que o link ocupe o espaço restante */
+    margin-right: 5px; /* Espaço entre o link e o botão */
+    /* Estilos de link já definidos para .wiki-link */
+    background-color: transparent; /* Remover fundo em links que são headers de submenu */
+    border: none; /* Remover borda */
+    padding: 8px 0; /* Ajustar padding */
+}
+
+.wiki-sidebar .submenu-header .wiki-link.active {
+    background-color: transparent; /* Manter transparente mesmo ativo */
+    color: var(--cor-destaque1); /* Destaca a cor do texto */
+    border-color: transparent;
+}
+
+/* Estilos para o botão de expandir/recolher */
+.wiki-sidebar .submenu-toggle {
+    background-color: var(--cor-input-borda);
+    color: var(--cor-texto-principal);
+    border: 1px solid var(--cor-bordas);
+    padding: 2px 6px; /* Padding pequeno */
+    font-size: 0.9em;
+    line-height: 1; /* Para centralizar o texto */
+    border-radius: 3px;
+    cursor: pointer;
+    min-width: 20px; /* Largura mínima para o + */
+    text-align: center;
+     transition: background-color 0.2s ease;
+}
+.wiki-sidebar .submenu-toggle:hover {
+     background-color: var(--cor-bordas);
+     color: var(--cor-fundo-principal);
+}
+
+/* Esconder sub-menus por padrão */
+.wiki-sidebar .submenu.hidden {
+    display: none;
+}
+
+/* Estilos para os links dentro do submenu */
+.wiki-sidebar .submenu a {
+    background-color: var(--cor-fundo-principal); /* Fundo para links de sub-itens */
+    border: 1px solid var(--cor-input-borda); /* Borda para links de sub-itens */
+    padding: 6px 10px; /* Padding ligeiramente menor */
+    font-size: 0.95em;
+    margin-bottom: 3px; /* Espaço entre links de sub-itens */
+}
+.wiki-sidebar .submenu a.active {
+     background-color: var(--cor-destaque2); /* Cor de destaque diferente para sub-links ativos */
+     color: var(--cor-fundo-principal);
+     border-color: var(--cor-destaque2);
+}
+
+/* --- Estilos Responsivos (dentro do @media) --- */
+@media (max-width: 768px) {
+    /* ... (Estilos responsivos existentes da Wiki) ... */
+
+    /* Ajustes para a Sidebar com Sub-menus em telas menores */
+    .wiki-sidebar ul {
+        flex-direction: column; /* Empilha os itens da lista principal */
+        gap: 0; /* Remove gap entre itens da lista principal */
+    }
+    .wiki-sidebar li {
+         width: 100%; /* Itens da lista principal ocupam largura total */
+         margin-bottom: 5px; /* Espaço entre itens principais empilhados */
+    }
+
+    .wiki-sidebar .submenu-header {
+         margin-bottom: 0; /* Remover espaço abaixo do header */
+         border: 1px solid var(--cor-input-borda); /* Adicionar uma borda ao header */
+         border-radius: 4px; /* Arredondar borda */
+         background-color: var(--cor-fundo-principal); /* Fundo para o header */
+         padding: 5px 10px; /* Padding para o header */
+    }
+
+    .wiki-sidebar .submenu-header .wiki-link {
+        padding: 0; /* Remover padding do link dentro do header responsivo */
+        border: none; /* Remover borda */
+        background-color: transparent; /* Remover fundo */
+    }
+    .wiki-sidebar .submenu-header .wiki-link.active {
+         color: var(--cor-destaque1); /* Manter cor de destaque */
+    }
+
+     .wiki-sidebar .submenu-toggle {
+        padding: 4px 8px; /* Ajustar padding do toggle responsivo */
+     }
+
+
+    .wiki-sidebar ul ul { /* Estilos para sub-listas aninhadas responsivas */
+        padding-left: 10px; /* Menos indentação */
+        margin-top: 2px;
+        border-left: 1px solid rgba(139, 90, 43, 0.3);
+    }
+     .wiki-sidebar .submenu a {
+        padding: 5px 8px; /* Menos padding para sub-links responsivos */
+     }
+}
