@@ -473,6 +473,41 @@
             </div> <!-- Fim de #companionControls -->
         </section>
 
+        <section id="wiki-section" class="hidden-section">
+            <h2>Wiki / Referência</h2>
+            <div class="wiki-container">
+
+                <div class="wiki-sidebar box">
+                    <h3>Categorias</h3>
+                    <ul>
+                        <!-- Agora os links usarão data-content-id que correspondem às chaves do JSON -->
+                        <li><a href="#" class="wiki-link active" data-content-id="intro">Introdução</a></li>
+                        <li><a href="#" class="wiki-link" data-content-id="basic-rules">Regras Básicas (Exemplo)</a></li>
+                        <li><a href="#" class="wiki-link" data-content-id="world-lore">O Mundo de Jogo (Exemplo)</a></li>
+                        <li><a href="#" class="wiki-link" data-content-id="classes">Classes Comuns (Exemplo)</a></li>
+                        <!-- Adicione mais links aqui, data-content-id deve bater com a chave no JSON -->
+                    </ul>
+
+                    <h3>Mecânicas Comuns</h3>
+                    <ul>
+                        <li><a href="#" class="wiki-link" data-content-id="combat">Combate</a></li>
+                        <li><a href="#" class="wiki-link" data-content-id="skills-saves">Perícias e Salvaguardas</a></li>
+                        <!-- Mais links -->
+                    </ul>
+                </div>
+
+                <div class="wiki-content box"> <!-- Área de Conteúdo -->
+                    <!-- Adicionar um título dinâmico e uma área para o conteúdo HTML -->
+                    <h3 id="wiki-topic-title">Carregando...</h3>
+                    <div id="wiki-topic-html-content">
+                        <!-- Conteúdo será carregado aqui pelo JavaScript -->
+                        <p>Por favor, aguarde enquanto o conteúdo da wiki é carregado, ou selecione um tópico na barra lateral.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
     </main>
 
     <footer>
@@ -482,5 +517,6 @@
     <script src="js/diceRoller.js"></script>
     <script src="js/app.js"></script> 
     <script src="js/character.js"></script>
+    ,<script src="js/wiki.js"></script>
 </body>
 </html>
