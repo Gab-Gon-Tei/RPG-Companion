@@ -15,6 +15,10 @@
     --cor-input-borda: #c8b893;
     --cor-destaque1-sombra-focus: rgba(128, 0, 0, 0.3); /* Bordô com transparência para sombra */
     --cor-separador: #ccc;        /* Cinza claro para separadores */
+
+    /* Fontes */
+    --fonte-titulos: 'MedievalSharp', cursive;
+    --fonte-corpo: 'Sorts Mill Goudy', serif;
 }
 
 /* ============================ */
@@ -24,7 +28,7 @@ body {
     font-family: var(--fonte-corpo);
     margin: 0;
     /*background-color: var(--cor-fundo-principal);*/
-    background-image: url('../images/fundo.jpg'); /* Caminho para sua imagem de fundo */
+    background-image: url('/imagens/fundo.jpg'); /* Caminho para sua imagem de fundo */
     background-repeat: repeat;
     background-attachment: fixed; /* Fixa o fundo para que não role com o conteúdo */
     color: var(--cor-texto-principal);
