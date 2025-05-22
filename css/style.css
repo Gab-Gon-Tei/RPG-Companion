@@ -1,6 +1,8 @@
 /* css/style.css */
 
-/* Adicionar no topo do arquivo */
+/* ============================ */
+/* === VARIÁVEIS CSS (TEMA) === */
+/* ============================ */
 :root {
     /* Paleta de Cores Medieval */
     --cor-fundo-principal: #f5e8c8; /* Bege claro (tipo pergaminho) */
@@ -11,83 +13,84 @@
     --cor-destaque2: #556B2F;      /* Verde Oliva Escuro (alternativa de destaque) */
     --cor-input-fundo: #fffbf0;   /* Fundo de input um pouco mais claro */
     --cor-input-borda: #c8b893;
-    --cor-destaque1-sombra-focus: rgba(128, 0, 0, 0.3);
-
-    /* Fontes */
-    --fonte-titulos: 'MedievalSharp', cursive;
-    --fonte-corpo: 'Sorts Mill Goudy', serif;
+    --cor-destaque1-sombra-focus: rgba(128, 0, 0, 0.3); /* Bordô com transparência para sombra */
+    --cor-separador: #ccc;        /* Cinza claro para separadores */
 }
 
+/* ============================ */
+/* === ESTILOS GERAIS === */
+/* ============================ */
 body {
     font-family: var(--fonte-corpo);
     margin: 0;
     /*background-color: var(--cor-fundo-principal);*/
-    background-image: url('../imagens/fundo.jpg'); /* Imagem de fundo */
-    background-repeat: repeat; /* Repetir a imagem */
+    background-image: url('../images/fundo.jpg'); /* Caminho para sua imagem de fundo */
+    background-repeat: repeat;
+    background-attachment: fixed; /* Fixa o fundo para que não role com o conteúdo */
     color: var(--cor-texto-principal);
-    line-height: 1.6; /* Melhora a legibilidade */
+    line-height: 1.6;
+    padding-bottom: 60px; /* Espaço para o rodapé fixo, se estiver usando */
 }
 
 header {
-    background-color: var(--cor-bordas); /* Usando cor de borda como um marrom mais escuro */
-    color: var(--cor-fundo-principal); /* Texto claro no fundo escuro */
+    background-color: var(--cor-bordas);
+    color: var(--cor-fundo-principal);
     padding: 1em 0;
     text-align: center;
-    border-bottom: 5px solid #5a3d1e; /* Borda mais escura e grossa */
+    border-bottom: 5px solid #5a3d1e;
 }
 
 header h1 {
     font-family: var(--fonte-titulos);
-    font-size: 2.8em; /* Maior para o título principal */
+    font-size: 2.8em;
     margin-bottom: 0.2em;
-    letter-spacing: 2px; /* Espaçamento entre letras para fontes de título */
+    letter-spacing: 2px;
 }
 
-/* Ajustar a navegação do header */
 header nav {
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
 .nav-button {
-    font-family: var(--fonte-titulos); /* Usar fonte de título nos botões de navegação */
+    font-family: var(--fonte-titulos);
     font-size: 1.1em;
     padding: 10px 20px;
     margin: 0 8px;
-    background-color: var(--cor-destaque1); /* Bordô */
+    background-color: var(--cor-destaque1);
     color: var(--cor-fundo-principal);
-    border: 2px solid #5a3d1e; /* Borda mais escura */
-    border-radius: 5px; /* Levemente arredondado ou pode ser 0 para mais rústico */
+    border: 2px solid #5a3d1e;
+    border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .nav-button:hover {
-    background-color: #600000; /* Bordô mais escuro no hover */
+    background-color: #600000;
     border-color: #4a2d0e;
 }
 
 
 main {
     padding: 20px;
-    max-width: 1000px; /* Aumentar um pouco a largura máxima para fichas */
+    max-width: 1000px;
     margin: 20px auto;
-    background-color: var(--cor-fundo-secao); /* Fundo da área principal */
+    background-color: var(--cor-fundo-secao);
     border: 3px solid var(--cor-bordas);
-    box-shadow: 5px 5px 15px rgba(0,0,0,0.3); /* Sombra mais rústica */
-    border-radius: 8px; /* Opcional: pode remover para um visual mais quadrado */
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+    border-radius: 8px;
+    position: relative; /* Necessário para positioning de elementos internos se for usar */
 }
 
 section {
     margin-bottom: 30px;
-    padding: 20px; /* Adiciona padding interno às seções */
-    border-bottom: 2px dashed var(--cor-bordas); /* Linha tracejada para separar */
+    padding: 20px;
+    border-bottom: 2px dashed var(--cor-bordas);
 }
 section:last-child {
-    border-bottom: none; /* Remove a borda da última seção */
+    border-bottom: none;
 }
 
-/* Títulos das Seções */
 section h2 {
     font-family: var(--fonte-titulos);
     color: var(--cor-destaque1);
@@ -98,14 +101,13 @@ section h2 {
     padding-bottom: 10px;
 }
 
-/* Caixas (boxes) dentro das seções */
 .box {
     border: 2px solid var(--cor-bordas);
     padding: 15px;
     margin-bottom: 20px;
-    border-radius: 0; /* Bordas quadradas para um visual mais rústico */
-    background-color: var(--cor-fundo-principal); /* Fundo das caixas como o pergaminho */
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.1); /* Sombra interna sutil */
+    border-radius: 0;
+    background-color: var(--cor-fundo-principal);
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
 }
 
 .box h3 {
@@ -114,77 +116,360 @@ section h2 {
     font-size: 1.5em;
     border-bottom: 1px solid var(--cor-bordas);
     padding-bottom: 8px;
-    margin-top: 0; /* Remove margem superior do h3 dentro da caixa */
+    margin-top: 0;
 }
 
-/* Estilizando inputs, selects, textareas */
 input[type="text"],
 input[type="number"],
-input[type="checkbox"],
 select,
 textarea {
-    font-family: var(--fonte-corpo); /* Manter fonte do corpo para legibilidade */
+    font-family: var(--fonte-corpo);
     background-color: var(--cor-input-fundo);
     border: 1px solid var(--cor-input-borda);
     color: var(--cor-texto-principal);
     padding: 8px;
-    border-radius: 3px; /* Leve arredondamento */
+    border-radius: 3px;
+    box-sizing: border-box; /* Essencial para inputs em layouts flex/grid */
 }
+
 input[type="text"]:focus,
 input[type="number"]:focus,
 select:focus,
 textarea:focus {
     outline: none;
     border-color: var(--cor-destaque1);
-    box-shadow: 0 0 5px var(--cor-destaque1_transparente_para_sombra); /* Precisamos definir essa cor */
+    box-shadow: 0 0 5px var(--cor-destaque1-sombra-focus);
 }
 
-/* Botões gerais (como o de rolar dados) */
 button {
-    font-family: var(--fonte-corpo); /* Ou var(--fonte-titulos) se preferir */
+    font-family: var(--fonte-corpo);
     padding: 8px 15px;
-    background-color: var(--cor-destaque2); /* Verde Oliva */
+    background-color: var(--cor-destaque2);
     color: var(--cor-fundo-principal);
-    border: 1px solid #3e4f20; /* Borda mais escura para o verde */
+    border: 1px solid #3e4f20;
     cursor: pointer;
     border-radius: 3px;
     transition: background-color 0.2s ease;
 }
 button:hover {
-    background-color: #455a25; /* Verde mais escuro no hover */
+    background-color: #455a25;
 }
 
-/* Estilizando os botões de Salvar/Carregar/Novo na ficha */
+
+/* ============================ */
+/* === ESTILOS UTILITÁRIOS === */
+/* ============================ */
+.hidden-section {
+    display: none;
+}
+
+.active-section {
+    display: block;
+}
+
+
+/* ============================ */
+/* === ESTILOS ROLADOR DADOS === */
+/* ============================ */
+#dice-roller-section div {
+    margin-bottom: 10px;
+}
+
+#dice-roller-section label {
+    margin-right: 5px;
+}
+
+#dice-roller-section input[type="number"],
+#dice-roller-section select {
+    padding: 5px;
+    margin-right: 10px;
+}
+
+#dice-roller-section button {
+    padding: 8px 15px;
+    background-color: var(--cor-destaque2);
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+#dice-roller-section button:hover {
+     background-color: #4cae4c; /* Verde mais claro no hover para diferenciar */
+}
+
+#dice-results {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: var(--cor-input-fundo);
+    border-radius: 5px;
+    border: 1px solid var(--cor-input-borda);
+}
+#dice-results span {
+    font-weight: bold;
+    color: var(--cor-destaque1);
+}
+
+
+/* ============================ */
+/* === ESTILOS FICHA PERSONAGEM === */
+/* ============================ */
+.character-actions {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--cor-separador);
+    text-align: center;
+}
+
 .character-actions button {
     font-family: var(--fonte-titulos);
     font-size: 1em;
-    background-color: var(--cor-destaque1); /* Bordô */
+    background-color: var(--cor-destaque1);
     border: 1px solid #5a3d1e;
 }
 .character-actions button:hover {
     background-color: #600000;
 }
 
-.hidden-section {
-    display: none; /* Para esconder seções que não estão ativas */
+.grid-container {
+    display: grid;
+    gap: 20px;
 }
 
-.active-section {
-    display: block; /* Para mostrar seções ativas */
+.character-info-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
-/* Rodapé */
-footer {
+.character-layout-grid {
+    grid-template-columns: 1fr 1.2fr 1fr;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 3px;
+    font-weight: bold;
+}
+
+.attributes-section .attribute {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.attributes-section .attribute label {
+    width: 100px;
+    font-weight: bold;
+    flex-shrink: 0; /* Impede que a label encolha */
+}
+.attr-score {
+    width: 60px !important;
     text-align: center;
-    padding: 15px;
-    background-color: var(--cor-bordas);
-    color: var(--cor-fundo-principal);
-    font-size: 0.9em;
-    border-top: 3px solid #5a3d1e;
-    /* position: static;  Remover fixed se estava antes, para um fluxo normal */
+    margin-right: 10px;
+}
+.attr-mod {
+    display: inline-block;
+    width: 40px;
+    padding: 8px;
+    border: 1px solid var(--cor-bordas);
+    border-radius: 4px;
+    text-align: center;
+    background-color: var(--cor-fundo-secao);
+    font-weight: bold;
+     color: var(--cor-destaque1); /* Cor de destaque para modificadores */
 }
 
-/* Estilos para o Layout B do Companion */
+.inspiration-prof-bonus {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px; /* Espaço entre os blocos Inspiração e Proficiência */
+}
+.inspiration-prof-bonus .form-group {
+    flex-basis: 48%; /* Cada item ocupa quase metade do espaço */
+    margin-bottom: 0; /* Remover margem inferior em flex item */
+}
+.inspiration-prof-bonus label {
+    text-align: center;
+}
+.inspiration-prof-bonus input[type="number"] {
+    width: 80px !important;
+    text-align: center;
+    display: block; /* Para ocupar sua largura e permitir text-align center na label */
+    margin: 0 auto; /* Centraliza input */
+}
+
+.save-throw, .skill {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+.prof-checkbox {
+    margin-right: 8px;
+    flex-shrink: 0; /* Impede checkbox de encolher */
+}
+.save-mod, .skill-mod {
+    display: inline-block;
+    width: 35px; /* Aumentado um pouco */
+    padding: 5px;
+    border: 1px solid var(--cor-bordas);
+    border-radius: 4px;
+    text-align: center;
+    background-color: var(--cor-fundo-secao);
+    margin-right: 8px;
+    font-size: 0.9em;
+    font-weight: bold;
+     color: var(--cor-destaque1);
+     flex-shrink: 0;
+}
+.save-throw label, .skill label {
+    font-weight: normal;
+    flex-grow: 1; /* Permite que a label ocupe o espaço restante */
+}
+
+.passive-perception input[type="number"] {
+    width: 60px !important;
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+}
+.passive-perception label {
+    text-align: center;
+    display: block;
+    margin-bottom: 5px;
+}
+
+
+.combat-stats-box {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+}
+.combat-stat {
+    flex-grow: 1; /* Permite que cada stat ocupe espaço igual */
+    margin-bottom: 0;
+}
+.combat-stat input {
+    width: 80px !important;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    display: block;
+    margin: 0 auto;
+}
+.combat-stat label {
+    font-size: 0.9em;
+    display: block;
+    margin-bottom: 5px;
+}
+
+
+.hit-points-box .form-group {
+    text-align: center;
+    margin-bottom: 10px;
+}
+.hit-points-box label {
+    font-size: 0.9em;
+    display: block;
+    margin-bottom: 3px;
+}
+.hit-points-box input[type="number"] {
+     width: 100px !important;
+    text-align: center;
+    font-size: 1.1em;
+     display: block;
+    margin: 0 auto;
+}
+.hit-points-box h3 {
+    margin-bottom: 15px;
+}
+
+
+.hit-dice-death-saves-box .form-group {
+    margin-bottom: 15px;
+}
+.hit-dice-death-saves-box label {
+     display: block;
+    margin-bottom: 3px;
+    font-weight: bold;
+}
+.hit-dice-death-saves-box input[type="text"] {
+    width: calc(100% - 16px) !important; /* Ajusta largura */
+    display: block;
+}
+
+.death-saves h4 {
+     font-family: var(--fonte-corpo);
+     font-size: 1.1em;
+     margin-top: 15px;
+     margin-bottom: 8px;
+     text-align: center;
+     border-bottom: none;
+     padding-bottom: 0;
+     font-weight: bold;
+}
+.death-saves {
+    text-align: center;
+}
+.death-saves label {
+    margin-right: 5px;
+    font-weight: normal;
+}
+.death-saves input[type="checkbox"] {
+    margin: 0 5px;
+    transform: scale(1.3); /* Aumenta um pouco o tamanho */
+    vertical-align: middle; /* Alinha com o texto */
+}
+
+
+.attacks-spellcasting-box textarea {
+    font-family: var(--fonte-corpo); /* Usar a fonte do corpo */
+    width: calc(100% - 16px) !important;
+    display: block;
+}
+
+.personality-box textarea,
+.features-traits-box textarea,
+.other-proficiencies-box textarea {
+     font-family: var(--fonte-corpo);
+     width: calc(100% - 16px) !important;
+     display: block;
+}
+
+.equipment-box .currency {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+    gap: 5px; /* Espaço entre os grupos de moeda */
+    flex-wrap: wrap;
+}
+.equipment-box .currency div { /* Container para label e input de moeda */
+    display: flex;
+    align-items: center;
+     gap: 3px;
+}
+.equipment-box .currency input {
+    width: 40px !important; /* Inputs de moeda menores */
+    padding: 4px;
+    text-align: center;
+}
+.equipment-box textarea {
+     font-family: var(--fonte-corpo);
+     width: calc(100% - 16px) !important;
+     display: block;
+}
+
+.character-footer-grid {
+    grid-template-columns: 1fr 1fr;
+}
+
+
+/* ============================ */
+/* === ESTILOS COMPANION === */
+/* ============================ */
 .companion-layout-b {
     display: flex;
     flex-direction: column; /* Empilha os blocos principais */
@@ -200,12 +485,21 @@ footer {
 
 .comp-char-name {
     font-weight: bold;
-    color: var(--cor-destaque1); /* Destaca o nome */
+    color: var(--cor-destaque1);
 }
 
 .comp-value {
     font-weight: bold;
+    color: var(--cor-texto-principal); /* Cor padrão para valores */
 }
+
+.comp-dice-result {
+     color: var(--cor-destaque1); /* Cor de destaque para resultado de dado */
+}
+#hitDiceHealResult {
+    color: var(--cor-destaque2); /* Cor de destaque para cura */
+}
+
 
 .comp-status-center {
     display: flex;
@@ -217,7 +511,8 @@ footer {
 }
 
 .comp-hp-display, .comp-temphp-display {
-   flex-basis: 45%; /* Tenta dar quase metade do espaço para cada */
+   flex-basis: 45%;
+   flex-grow: 1; /* Permite crescer um pouco */
 }
 
 
@@ -226,29 +521,29 @@ footer {
     font-size: 0.9em;
     margin-bottom: 5px;
     color: var(--cor-texto-principal);
+    font-weight: bold;
 }
 
 .comp-hp-large {
-    font-size: 2.5em; /* Tamanho grande para os números de PV */
+    font-size: 2.5em;
     font-weight: bold;
-    color: var(--cor-destaque1); /* Cor de destaque para PVs */
+    color: var(--cor-destaque1);
     line-height: 1;
 }
 #companionTempHP {
-     color: var(--cor-destaque2); /* Cor diferente para PV Temp */
+     color: var(--cor-destaque2);
 }
 
 
 .comp-action-bar {
     display: flex;
-    flex-wrap: wrap; /* Permite quebrar linha em telas menores */
-    justify-content: space-around; /* Tenta espaçar os grupos de ação */
+    flex-wrap: wrap;
+    justify-content: space-around;
     align-items: center;
-    gap: 15px; /* Espaço entre os grupos de ação */
+    gap: 15px;
     padding: 10px;
 }
 
-/* Ajustes finos nos grupos de ação individuais */
 .hp-actions,
 .temp-hp-actions,
 .dice-roller-actions,
@@ -256,8 +551,8 @@ footer {
 .death-saves {
     display: flex;
     align-items: center;
-    flex-wrap: wrap; /* Permite que os botões/inputs quebrem linha */
-    gap: 8px; /* Espaço entre label, input, botão */
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 .hp-actions label,
@@ -267,34 +562,54 @@ footer {
 .death-saves label {
     font-weight: bold;
     margin-right: 5px;
+    flex-shrink: 0;
 }
 
-/* Estilos para o mini rolador */
+.hp-actions input[type="number"],
+.temp-hp-actions input[type="number"],
+.hit-dice-actions input[type="number"],
+.hit-dice-actions select {
+    padding: 8px;
+    flex-grow: 1; /* Permite inputs crescerem */
+     min-width: 50px; /* Largura mínima */
+    max-width: 100px; /* Limita largura */
+}
+.hit-dice-actions input[type="number"] {
+    max-width: 60px; /* Input de número de dados menor */
+}
+
+
 .comp-dice-button {
     font-family: var(--fonte-titulos);
-    padding: 5px 10px; /* Botões menores */
+    padding: 5px 10px;
     font-size: 0.9em;
-    min-width: 45px; /* Largura mínima */
+    min-width: 45px;
+    flex-shrink: 0;
 }
 .comp-dice-result-label {
-    margin-left: 10px; /* Espaço antes do resultado */
+    margin-left: 10px;
     font-weight: normal;
+    flex-shrink: 0;
 }
 .comp-dice-result {
     display: inline-block;
-    min-width: 30px; /* Espaço para o resultado */
+    min-width: 30px;
     text-align: center;
     background-color: var(--cor-input-fundo);
     padding: 5px;
     border: 1px solid var(--cor-input-borda);
     border-radius: 3px;
     font-size: 1.1em;
+    flex-shrink: 0;
 }
 
-
 .death-saves input[type="checkbox"] {
-    margin: 0 3px 0 1px;
+    margin: 0 5px 0 1px;
     transform: scale(1.3);
+    vertical-align: middle;
+}
+.death-saves {
+    /* Removendo text-align center e padding */
 }
 .death-saves label {
      margin-right: 10px;
@@ -307,212 +622,50 @@ footer {
 }
 
 #saveCompanionChangesButton {
-    padding: 12px 25px; /* Botão salvar maior */
+    padding: 12px 25px;
     font-size: 1.1em;
     font-family: var(--fonte-titulos);
 }
 
-/* Esconder o input de cura para dados de vida (só mostra o resultado) */
+/* Esconder o resultado de cura de dados de vida se vazio */
 #hitDiceHealResult:not(:empty)::before {
-    content: "Curou: "; /* Adiciona um texto antes do valor */
+    content: "Curou: ";
     font-weight: normal;
     font-size: 0.9em;
+    color: var(--cor-texto-principal);
 }
 #hitDiceHealResult:empty {
-    display: none; /* Esconde se estiver vazio */
+    display: none;
 }
 
+/* Animação do resultado do dado */
 @keyframes flash {
   0%, 100% { background-color: var(--cor-input-fundo); }
-  50% { background-color: var(--cor-destaque2); color: var(--cor-fundo-principal); } /* Pisca com a cor de destaque 2 */
+  50% { background-color: var(--cor-destaque2); color: var(--cor-fundo-principal); }
 }
 
 .comp-dice-result.dice-rolled {
   animation: flash 0.5s ease-out;
 }
 
+
 /* ============================ */
-/* === ESTILOS RESPONSIVOS === */
+/* === ESTILOS WIKI / REFERÊNCIA === */
 /* ============================ */
-
-/* Para telas com largura máxima de 768px (tablets em modo retrato, smartphones) */
-@media (max-width: 768px) {
-
-    header h1 {
-        font-size: 2.2em; /* Reduzir um pouco o título principal */
-    }
-
-    .nav-button {
-        font-size: 1em;
-        padding: 8px 12px; /* Botões de navegação menores */
-        margin: 0 4px;
-    }
-
-    main {
-        padding: 10px; /* Menos padding lateral no main */
-        margin: 10px;
-        max-width: 95%; /* Permitir que o main use quase toda a largura */
-    }
-
-    section h2 {
-        font-size: 1.6em; /* Títulos de seção menores */
-    }
-
-    /* --- Responsividade da Ficha de Personagem --- */
-    .character-layout-grid {
-        grid-template-columns: 1fr; /* Força uma única coluna */
-    }
-
-    .character-info-grid {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Ajusta colunas do header da ficha */
-    }
-
-    .attributes-section .attribute label {
-        width: 80px; /* Reduzir largura da label de atributo */
-    }
-     .equipment-box .currency {
-        flex-wrap: wrap; /* Permitir que moedas quebrem linha */
-        justify-content: flex-start;
-    }
-    .equipment-box .currency input {
-        width: 40px !important; /* Inputs de moeda menores */
-    }
-    .character-footer-grid {
-        grid-template-columns: 1fr; /* Empilha proficiências e equipamento */
-    }
-
-
-    /* --- Responsividade do Companion em Jogo (Layout B) --- */
-    .comp-top-bar {
-        font-size: 1.1em; /* Reduzir fonte da barra superior */
-        /* Poderia adicionar flex-wrap se necessário */
-    }
-
-    .comp-status-center {
-        flex-direction: column; /* Empilha PV Atual e PV Temp */
-        gap: 15px;
-        align-items: center; /* Centraliza os itens empilhados */
-    }
-
-    .comp-hp-large {
-        font-size: 2em; /* Reduzir um pouco o tamanho dos PVs */
-    }
-
-    .comp-action-bar {
-        flex-direction: column; /* Empilha os grupos de ação */
-        align-items: stretch; /* Faz os grupos ocuparem a largura */
-        gap: 15px;
-    }
-
-    /* Garante que os grupos internos também usem bem o espaço */
-    .hp-actions,
-    .temp-hp-actions,
-    .dice-roller-actions,
-    .hit-dice-actions,
-    .death-saves {
-        justify-content: center; /* Centraliza itens dentro de cada grupo */
-        width: 100%; /* Ocupa toda a largura da action-bar */
-    }
-
-    /* Ajustes específicos para botões/inputs em telas pequenas */
-    .hp-actions input[type="number"],
-    .temp-hp-actions input[type="number"] {
-        flex-grow: 1; /* Permite que o input cresça */
-        max-width: 120px; /* Mas limita um pouco */
-    }
-
-    .dice-roller-actions {
-        justify-content: space-evenly; /* Espaça melhor os botões de dado */
-    }
-
-    .comp-dice-button {
-        padding: 8px; /* Aumenta área de toque */
-    }
-
-     .death-saves {
-        justify-content: center;
-        padding: 5px 0; /* Adiciona espaço vertical */
-    }
-    .death-saves label{
-        margin-right: 5px;
-    }
-}
-
-
-/*Ajustes ainda menores para smartphones (ex: largura < 480px) */
-@media (max-width: 480px) {
-    header h1 {
-        font-size: 1.8em;
-    }
-    .nav-button {
-        display: block; /* Empilha os botões de navegação */
-        margin: 5px auto;
-        width: 80%;
-    }
-
-     /* Deixar inputs e botões de ação do companion maiores e mais fáceis de clicar */
-    .hp-actions, .temp-hp-actions {
-        flex-direction: column; /* Empilha label, input e botões */
-        align-items: stretch;
-    }
-     .hp-actions input, .hp-actions button,
-     .temp-hp-actions input, .temp-hp-actions button {
-        width: 100%;
-        margin: 3px 0;
-        box-sizing: border-box; /* Garante que padding não estoure */
-     }
-
-    .dice-roller-actions {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 5px;
-    }
-     .comp-dice-button {
-        flex-basis: 30%; /* Tenta caber 3 botões por linha */
-    }
-    .comp-dice-result-label {
-        margin-left: 0;
-        margin-top: 5px;
-        flex-basis: 100%; /* Resultado abaixo dos botões */
-        text-align: center;
-    }
-    .comp-dice-result {
-        margin: 5px auto 0 auto; /* Centraliza resultado */
-        display: block;
-    }
-
-     .hit-dice-actions {
-         flex-direction: column;
-         align-items: stretch;
-     }
-      .hit-dice-actions input, .hit-dice-actions select, .hit-dice-actions button {
-         width: 100%;
-         margin: 3px 0;
-         box-sizing: border-box;
-     }
-
-     .death-saves {
-         flex-direction: column;
-         align-items: center;
-     }
-}
-
-/* Estilos para a Seção Wiki */
-
 #wiki-section .wiki-container {
-    display: flex; /* Habilita flexbox para layout lado a lado */
-    gap: 20px; /* Espaço entre a barra lateral e o conteúdo */
-    flex-wrap: wrap; /* Permite quebrar linha em telas menores */
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
 }
 
 .wiki-sidebar {
-    flex: 0 0 250px; /* Não cresce, não encolhe, largura base de 250px */
-    /* Os estilos .box já dão padding, borda, etc. */
-    align-self: flex-start; /* Alinha o topo da sidebar com o topo do container flex */
+    flex: 0 0 250px; /* Largura fixa em telas grandes */
+    align-self: flex-start;
+    /* Overflow-y: auto; max-height: 600px; Se quiser sidebar scrollável */
 }
 
 .wiki-sidebar h3 {
-    font-family: var(--fonte-corpo); /* Usar fonte de corpo para subtítulos da sidebar */
+    font-family: var(--fonte-corpo);
     font-size: 1.2em;
     border-bottom: 1px solid var(--cor-bordas);
     padding-bottom: 5px;
@@ -520,64 +673,72 @@ footer {
     margin-bottom: 10px;
 }
 .wiki-sidebar h3:first-child {
-     margin-top: 0; /* Remove margem superior do primeiro h3 */
+     margin-top: 0;
 }
 
-
 .wiki-sidebar ul {
-    list-style: none; /* Remove marcadores de lista padrão */
+    list-style: none;
     padding: 0;
     margin: 0;
 }
 
 .wiki-sidebar li {
-     margin-bottom: 3px; /* Espaço menor entre itens da lista */
+     margin-bottom: 3px;
 }
 
 /* Estilos para o container do link principal + toggle */
 .wiki-sidebar .submenu-header {
-    display: flex; /* Para alinhar o link e o botão toggle */
+    display: flex; /* Alinha link e botão */
     align-items: center;
-    justify-content: space-between; /* Espaça link e botão */
-     /* margin-bottom: 3px; */ /* Remover esta margem para não ter espaço extra */
-     line-height: 1.4; /* Ajuste a altura da linha se necessário */
+    justify-content: space-between;
+    line-height: 1.4;
+    /* Remover padding aqui e colocar no link para que o link inteiro seja clicável */
 }
 
 .wiki-sidebar .submenu-header .wiki-link {
-    flex-grow: 1; /* Permite que o link ocupe o espaço restante */
-    margin-right: 5px; /* Espaço entre o link e o botão */
-    /* Estilos de link já definidos para .wiki-link */
-    background-color: transparent; /* Remover fundo em links que são headers de submenu */
-    border: none; /* Remover borda */
-    padding: 8px 0; /* Ajustar padding */
+    flex-grow: 1;
+    margin-right: 5px;
+    background-color: var(--cor-fundo-principal); /* Fundo para o link header */
+    border: 1px solid var(--cor-input-borda); /* Borda para o link header */
+    border-radius: 4px;
+    padding: 8px 10px; /* Padding nos links */
+    text-decoration: none;
+    color: var(--cor-texto-principal);
+     transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.wiki-sidebar .submenu-header .wiki-link:hover {
+     background-color: var(--cor-input-borda);
+     color: var(--cor-texto-principal);
 }
 
 .wiki-sidebar .submenu-header .wiki-link.active {
-    background-color: transparent; /* Manter transparente mesmo ativo */
-    color: var(--cor-destaque1); /* Destaca a cor do texto */
-    border-color: transparent;
+     background-color: var(--cor-destaque1); /* Cor de destaque para link header ativo */
+     color: var(--cor-fundo-principal);
+     border-color: var(--cor-destaque1);
+     font-weight: bold;
 }
+
 
 /* Estilos para o botão de expandir/recolher */
 .wiki-sidebar .submenu-toggle {
     background-color: var(--cor-input-borda);
     color: var(--cor-texto-principal);
     border: 1px solid var(--cor-bordas);
-    padding: 2px 6px; /* Padding pequeno */
+    padding: 2px 6px;
     font-size: 0.9em;
-    line-height: 1; /* Para centralizar o texto + ou - */
+    line-height: 1;
     border-radius: 3px;
     cursor: pointer;
-    min-width: 20px; /* Largura mínima para o + */
+    min-width: 20px;
     text-align: center;
      transition: background-color 0.2s ease;
-     flex-shrink: 0; /* Impede que o botão encolha em layouts flex */
+     flex-shrink: 0; /* Impede que o botão encolha */
 }
 .wiki-sidebar .submenu-toggle:hover {
      background-color: var(--cor-bordas);
      color: var(--cor-fundo-principal);
 }
-
 
 /* !!!!! REGRAS ESSENCIAIS PARA OCULTAR/MOSTRAR SUBMENUS !!!!! */
 
@@ -587,47 +748,52 @@ footer {
 }
 
 /* Mostrar sub-menus quando o LI pai tiver a classe 'expanded' */
-.wiki-sidebar li.has-submenu.expanded > ul.submenu:not(.hidden) {
-     display: block; /* OU display: flex; se você estilizar o submenu interno como flex */
+/* Nota: o JS remove/adiciona a classe 'hidden'. Esta regra reforça que se 'expanded' E NÃO 'hidden', mostre. */
+/* Ou, mais simplesmente, confie no JS alternando 'hidden' e apenas use: */
+/* .wiki-sidebar li.has-submenu.expanded > ul.submenu { display: block; } */
+/* Mas manter a dependência da classe hidden é mais robusto se JS/CSS se desincronizarem */
+
+.wiki-sidebar li.has-submenu > ul.submenu:not(.hidden) {
+     display: block; /* Garante que é um bloco (lista vertical) */
 }
 
-/* Ajuste o texto do botão toggle quando o LI pai tiver a classe 'expanded' */
-/* Isso é uma alternativa visual ao JS mudando o texto, ou pode ser usado junto */
+
+/* Estilo adicional para o botão toggle quando o pai está expanded */
+/* O JS já muda o texto (+/-), isto é para aparência visual extra */
 .wiki-sidebar li.has-submenu.expanded .submenu-toggle {
-    /* Content property só funciona em pseudo-elementos como ::before/::after */
-    /* Para mudar o texto real do botão, é melhor usar JS como já fizemos */
-     /* Exemplo: se quiser um fundo diferente para o toggle expandido */
-     /* background-color: var(--cor-destaque1); */
-     /* color: var(--cor-fundo-principal); */
+    /* Exemplo: Mudar cor para indicar expandido */
+    /* background-color: var(--cor-destaque1); */
+    /* color: var(--cor-fundo-principal); */
 }
+
 
 /* !!!!! FIM DAS REGRAS ESSENCIAIS !!!!! */
 
 
 /* Estilos para sub-listas aninhadas (indentação, borda) */
-.wiki-sidebar ul ul { /* Estilos para sub-listas aninhadas */
-    padding-left: 15px; /* Indentação para sub-itens */
-    margin-top: 5px; /* Espaço acima da sub-lista */
-    border-left: 2px solid rgba(139, 90, 43, 0.3); /* Linha sutil indicando aninhamento */
+.wiki-sidebar ul ul { /* Estilos para qualquer UL que está dentro de outro UL na sidebar */
+    padding-left: 15px;
+    margin-top: 5px;
+    border-left: 2px solid rgba(139, 90, 43, 0.3);
 }
 
-/* Estilos para os links dentro do submenu */
-.wiki-sidebar .submenu a {
-    display: block; /* Faz o link ocupar toda a largura disponível */
-    background-color: var(--cor-fundo-principal); /* Fundo para links de sub-itens */
-    border: 1px solid var(--cor-input-borda); /* Borda para links de sub-itens */
-    padding: 6px 10px; /* Padding ligeiramente menor */
+/* Estilos para os links *dentro* do submenu */
+.wiki-sidebar ul.submenu > li > .wiki-link { /* Seleciona links que são filhos diretos de LI que são filhos de UL.submenu */
+    display: block;
+    background-color: var(--cor-fundo-principal);
+    border: 1px solid var(--cor-input-borda);
+    padding: 6px 10px;
     font-size: 0.95em;
-    margin-bottom: 3px; /* Espaço entre links de sub-itens */
+    margin-bottom: 3px;
     border-radius: 4px;
-    text-decoration: none; /* Garante que links não estejam sublinhados */
-    color: var(--cor-texto-principal); /* Cor do texto padrão */
+    text-decoration: none;
+    color: var(--cor-texto-principal);
     transition: background-color 0.2s ease;
 }
-.wiki-sidebar .submenu a:hover {
+.wiki-sidebar ul.submenu > li > .wiki-link:hover {
     background-color: var(--cor-input-borda);
 }
-.wiki-sidebar .submenu a.active {
+.wiki-sidebar ul.submenu > li > .wiki-link.active {
      background-color: var(--cor-destaque2); /* Cor de destaque diferente para sub-links ativos */
      color: var(--cor-fundo-principal);
      border-color: var(--cor-destaque2);
@@ -641,66 +807,190 @@ footer {
 }
 
 .wiki-topic-content {
-    margin-bottom: 20px;
-    /* A classe .hidden e .active no JS controlará a exibição,
-       mas agora só precisamos dela no HTML inicial.
-       O JS displayWikiTopic vai carregar o conteúdo em um único lugar. */
+    /* Não precisa de estilos de display aqui, o JS carrega em um único div */
+    /* margin-bottom: 20px; */ /* Removido, não se aplica mais a um único div */
+}
+
+.wiki-content h3 { /* Estilo para o título do tópico carregado */
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.8em;
+    color: var(--cor-destaque1);
+    border-bottom: 1px solid var(--cor-separador);
+    padding-bottom: 8px;
+}
+
+.wiki-content p {
+    margin-bottom: 1em;
+}
+.wiki-content ul {
+    margin-bottom: 1em;
+    padding-left: 20px;
+}
+.wiki-content li {
+    margin-bottom: 5px;
 }
 
 
-/* --- Estilos Responsivos (dentro do @media) --- */
-@media (max-width: 768px) {
-    /* ... (Estilos responsivos existentes) ... */
+/* ============================ */
+/* === ESTILOS RESPONSIVOS === */
+/* ============================ */
 
-    /* Ajustes para a Sidebar com Sub-menus em telas menores */
-    .wiki-sidebar ul {
-        flex-direction: column; /* Empilha os itens da lista principal */
-        gap: 0; /* Remove gap entre itens da lista principal */
+/* Para telas com largura máxima de 768px */
+@media (max-width: 768px) {
+
+    header h1 { font-size: 2.2em; }
+    .nav-button {
+        font-size: 1em; padding: 8px 12px; margin: 0 4px;
+    }
+    main { padding: 10px; margin: 10px; max-width: 95%; }
+    section h2 { font-size: 1.6em; }
+
+    /* Ficha */
+    .character-layout-grid { grid-template-columns: 1fr; }
+    .character-info-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+    .attributes-section .attribute label { width: 80px; }
+     .equipment-box .currency { flex-wrap: wrap; justify-content: flex-start; gap: 10px; }
+     .equipment-box .currency div { gap: 5px; }
+    .equipment-box .currency input { width: 50px !important; padding: 4px; } /* Inputs de moeda maiores em mobile */
+    .character-footer-grid { grid-template-columns: 1fr; }
+
+
+    /* Companion (Layout B) */
+    .comp-top-bar { font-size: 1.1em; }
+    .comp-status-center { flex-direction: column; gap: 15px; align-items: center; }
+    .comp-hp-large { font-size: 2em; }
+    .comp-action-bar { flex-direction: column; align-items: stretch; gap: 15px; }
+    .hp-actions, .temp-hp-actions, .dice-roller-actions, .hit-dice-actions, .death-saves {
+        justify-content: center; width: 100%;
+    }
+    .hp-actions input[type="number"], .temp-hp-actions input[type="number"] {
+        flex-grow: 1; max-width: 150px; /* Permitir inputs maiores */
+    }
+     .dice-roller-actions { justify-content: space-evenly; }
+    .comp-dice-button { padding: 8px; min-width: 50px; } /* Botões de dado maiores */
+    .death-saves input[type="checkbox"] { transform: scale(1.4); }
+
+
+    /* Wiki */
+    #wiki-section .wiki-container {
+        flex-direction: column; /* Empilha sidebar e conteúdo */
+    }
+    .wiki-sidebar {
+        flex-basis: auto; width: 100%; /* Sidebar ocupa largura total */
+    }
+     /* Estilos responsivos para os itens da lista principal da sidebar */
+     .wiki-sidebar ul {
+        display: flex; /* Usa flexbox para os itens principais */
+        flex-wrap: wrap; /* Permite quebrar linha */
+        gap: 8px; /* Espaço entre os itens */
+        justify-content: center;
     }
     .wiki-sidebar li {
-         width: 100%; /* Itens da lista principal ocupam largura total */
-         margin-bottom: 5px; /* Espaço entre itens principais empilhados */
+        width: auto; /* Largura automática para flex items */
+        margin-bottom: 0; /* Remover margem inferior */
+         flex-shrink: 0; /* Impede encolhimento */
     }
 
+    /* Ajustes responsivos para o header do submenu e o link dentro dele */
     .wiki-sidebar .submenu-header {
-         margin-bottom: 0; /* Remover espaço abaixo do header */
-         border: 1px solid var(--cor-input-borda); /* Adicionar uma borda ao header */
-         border-radius: 4px; /* Arredondar borda */
-         background-color: var(--cor-fundo-principal); /* Fundo para o header */
-         padding: 5px 10px; /* Padding para o header */
-         line-height: normal; /* Resetar line-height */
+         border: 1px solid var(--cor-input-borda);
+         border-radius: 4px;
+         background-color: var(--cor-fundo-principal);
+         padding: 5px 10px;
+         line-height: normal;
+         gap: 5px; /* Espaço entre link header e toggle */
     }
-
     .wiki-sidebar .submenu-header .wiki-link {
-        padding: 0; /* Remover padding do link dentro do header responsivo */
-        border: none; /* Remover borda */
-        background-color: transparent; /* Remover fundo */
+        padding: 0; border: none; background-color: transparent; /* Remover estilos que ficam feios em mobile */
     }
-    .wiki-sidebar .submenu-header .wiki-link.active {
-         color: var(--cor-destaque1); /* Manter cor de destaque */
-    }
-
+     .wiki-sidebar .submenu-header .wiki-link.active { /* Manter cor de destaque */
+         color: var(--cor-destaque1);
+     }
      .wiki-sidebar .submenu-toggle {
-        padding: 4px 8px; /* Ajustar padding do toggle responsivo */
-        font-size: 1em; /* Tamanho um pouco maior */
+        padding: 4px 8px; font-size: 1em; /* Botão toggle maior */
      }
 
-     /* Remove indentação e borda das sub-listas em mobile, se preferir */
-    /* .wiki-sidebar ul ul {
-        padding-left: 0;
-        border-left: none;
-    } */
 
-     .wiki-sidebar ul ul { /* Manter indentação e borda em mobile */
-        padding-left: 10px; /* Menos indentação */
-        margin-top: 2px;
+    /* Ajustes responsivos para sub-listas (submenus) */
+    .wiki-sidebar ul ul { /* Estilos para qualquer UL que está dentro de outro UL */
+        padding-left: 10px;
+        margin-top: 5px;
         border-left: 1px solid rgba(139, 90, 43, 0.3);
+        /* Em mobile, se a sidebar for empilhada, talvez você queira remover a borda esquerda */
+        /* border-left: none; */
+        /* padding-left: 0; */
     }
 
-     .wiki-sidebar .submenu a {
-        padding: 5px 8px; /* Menos padding para sub-links responsivos */
+     /* Estilos responsivos para os links *dentro* do submenu */
+     .wiki-sidebar ul.submenu > li > .wiki-link {
+         padding: 6px 10px; /* Manter padding similar ao desktop */
      }
+
+     .wiki-content {
+         width: 100%; /* Conteúdo ocupa largura total */
+     }
+
+     .wiki-content h3 { font-size: 1.5em; }
+
 }
 
-/* Opcional: Ajustes ainda menores para smartphones */
-/* ... (outras media queries, se tiver) ... */
+/* Para telas com largura máxima de 480px (smartphones) */
+@media (max-width: 480px) {
+    header h1 { font-size: 1.8em; }
+    .nav-button { display: block; margin: 5px auto; width: 80%; }
+
+     /* Companion */
+    .hp-actions, .temp-hp-actions, .hit-dice-actions {
+        flex-direction: column; align-items: stretch;
+    }
+     .hp-actions input, .hp-actions button,
+     .temp-hp-actions input, .temp-hp-actions button,
+      .hit-dice-actions input, .hit-dice-actions select, .hit-dice-actions button {
+        width: 100% !important; margin: 3px 0; box-sizing: border-box;
+     }
+     /* Ajustes para inputs específicos que não devem ter 100% */
+     .hit-dice-actions input[type="number"] { max-width: 80px !important; align-self: flex-start; }
+
+
+    .dice-roller-actions { flex-wrap: wrap; justify-content: center; gap: 5px; }
+     .comp-dice-button { flex-basis: 30%; }
+    .comp-dice-result-label { margin-left: 0; margin-top: 5px; flex-basis: 100%; text-align: center; }
+    .comp-dice-result { margin: 5px auto 0 auto; display: block; }
+
+     .death-saves { flex-direction: column; align-items: center; } /* Mantido como empilhado em 480px */
+
+
+     /* Wiki */
+     .wiki-sidebar ul {
+        /* Em telas menores, talvez você queira que os links principais sejam blocos maiores */
+        flex-direction: column;
+         align-items: stretch;
+     }
+     .wiki-sidebar li { width: 100%; } /* Faz os itens da lista principal ocuparem toda a largura */
+
+     .wiki-sidebar .submenu-header .wiki-link {
+         /* Links dentro do header do submenu podem ocupar toda a largura disponível */
+     }
+
+     /* Seções da Wiki */
+    .wiki-content h3 { font-size: 1.3em; }
+
+}
+
+
+/* ============================ */
+/* === RODAPÉ === */
+/* ============================ */
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: var(--cor-bordas);
+    color: var(--cor-fundo-principal);
+    font-size: 0.9em;
+    border-top: 3px solid #5a3d1e;
+    /* Se quiser rodapé fixo: */
+    /* position: fixed; */
+    /* bottom: 0; */
+    /* width: 100%; */
+}
