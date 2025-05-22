@@ -482,8 +482,11 @@
                     <h3>Conteúdo</h3>
                     <ul>
                         <!-- Item Principal (simples) -->
-                        <li><a href="#" class="wiki-link active" data-content-id="intro">Introdução</a></li>
-
+                        <li class="has-submenu"> <!-- Adiciona classe para indicar que tem sub-menu -->
+                            <div class="submenu-header"> <!-- Container para o link e o toggle -->
+                                 <li><a href="#" class="wiki-link active" data-content-id="intro">Introdução</a></li>
+                            </div>
+                        </li>
                         <!-- Item Principal com Sub-menu -->
                         <li class="has-submenu"> <!-- Adiciona classe para indicar que tem sub-menu -->
                             <div class="submenu-header"> <!-- Container para o link e o toggle -->
