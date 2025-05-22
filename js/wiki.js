@@ -1,73 +1,81 @@
 // js/wiki.js
+console.log("DEBUG: --- Iniciando script wiki.js ---"); // LOG GERAL 1
+
 document.addEventListener('DOMContentLoaded', function() {
+    console.log("DEBUG: DOMContentLoaded disparado em wiki.js"); // LOG GERAL 2
 
-    // Seleciona todos os links da barra lateral da wiki (links individuais, não os headers de submenu)
+    // --- SELEÇÃO DE ELEMENTOS ---
     const wikiLinks = document.querySelectorAll('.wiki-sidebar .wiki-link');
-    // Seleciona os elementos onde o título e conteúdo do tópico serão exibidos
+    console.log("DEBUG: wikiLinks encontrados:", wikiLinks); // DEBUG 1
+
     const wikiTopicTitleElement = document.getElementById('wiki-topic-title');
+    console.log("DEBUG: wikiTopicTitleElement encontrado:", wikiTopicTitleElement); // DEBUG 2
+
     const wikiTopicHtmlContentElement = document.getElementById('wiki-topic-html-content');
-    // Seleciona todos os botões de expandir/recolher sub-menus
+    console.log("DEBUG: wikiTopicHtmlContentElement encontrado:", wikiTopicHtmlContentElement); // DEBUG 3
+
     const submenuToggles = document.querySelectorAll('.wiki-sidebar .submenu-toggle');
-    // Seleciona todas as sub-listas (os ULs que são sub-menus)
+    console.log("DEBUG: submenuToggles encontrados:", submenuToggles); // DEBUG 4
+
     const submenus = document.querySelectorAll('.wiki-sidebar ul.submenu');
+    console.log("DEBUG: submenus encontrados:", submenus); // DEBUG 5
 
-
-    // Variável para armazenar os dados da wiki depois de carregados
+    // --- VARIÁVEIS GLOBAIS ---
     let wikiData = null;
+
+    // --- FUNÇÕES (loadWikiContent, displayWikiTopic, updateSidebarActiveLink, rollCompanionDie - APENAS SE EXISTIR NO HTML/PLANO FUTURO, REMOVI DO WIKI.JS, ELE DEVE ESTAR EM CHARACTER.JS OU UM NOVO SCRIPT SEPARADO) ---
+    // NOTE: Removi a função rollCompanionDie e spendHitDice e outras de companion daqui.
+    // Elas NÃO deveriam estar no wiki.js. Se você as copiou acidentalmente para cá, remova-as.
+    // O wiki.js deve conter apenas lógica para a wiki.
 
     // --- Função para carregar o arquivo JSON da Wiki ---
     async function loadWikiContent() {
-        console.log("loadWikiContent: Iniciando carregamento do JSON."); // DEBUG
+        console.log("DEBUG: loadWikiContent: Iniciando carregamento do JSON.");
         try {
-            // Caminho para o seu arquivo JSON
             const response = await fetch('data/wiki-content.json');
-            if (!response.ok) { // Verifica se a resposta HTTP foi bem-sucedida (código 200-299)
+            if (!response.ok) {
+                 console.error(`DEBUG: loadWikiContent: Erro HTTP: ${response.status} ${response.statusText}`); // DEBUG ERRO
                 throw new Error(`Erro HTTP: ${response.status} ${response.statusText}`);
             }
-            wikiData = await response.json(); // Transforma a resposta em objeto JSON
-            console.log("loadWikiContent: Wiki content loaded successfully:", wikiData); // DEBUG
+            wikiData = await response.json();
+            console.log("DEBUG: loadWikiContent: Wiki content loaded successfully:", wikiData); // DEBUG
 
             // Tenta exibir o tópico inicial após carregar os dados
-            // Primeiro verifica se há um link ativo no HTML por padrão
             const initialActiveLink = document.querySelector('.wiki-sidebar .wiki-link.active');
             if (initialActiveLink) {
                  const initialTopicKey = initialActiveLink.dataset.contentId;
-                 console.log("loadWikiContent: Link ativo inicial encontrado, exibindo tópico:", initialTopicKey); // DEBUG
+                 console.log("DEBUG: loadWikiContent: Link ativo inicial encontrado, exibindo tópico:", initialTopicKey);
                  displayWikiTopic(initialTopicKey);
                  updateSidebarActiveLink(initialTopicKey); // Garante que o estado ativo visual está correto
 
-                 // Opcional: Expande o sub-menu se o link inicial estiver dentro de um
+                 // Expande o sub-menu se o link inicial estiver dentro de um
                  const parentSubmenu = initialActiveLink.closest('.submenu');
                  if (parentSubmenu) {
-                     const parentSubmenuLi = parentSubmenu.closest('.has-submenu');
-                     if (parentSubmenuLi && parentSubmenuLi.classList.contains('has-submenu')) { // Garante que encontrou o LI correto
-                          console.log("loadWikiContent: Link ativo inicial dentro de um submenu, expandindo pai."); // DEBUG
-                         parentSubmenuLi.classList.add('expanded'); // Marca o LI pai como expandido
-                         // Encontra o botão toggle dentro do LI pai
+                     const parentSubmenuLi = parentSubmenu.closest('li.has-submenu');
+                     if (parentSubmenuLi) { // Simplificado a verificação aqui
+                          console.log("DEBUG: loadWikiContent: Link ativo inicial dentro de um submenu, expandindo pai.");
+                         parentSubmenuLi.classList.add('expanded');
                          const toggleBtn = parentSubmenuLi.querySelector('.submenu-toggle');
-                         if (toggleBtn) toggleBtn.textContent = '-'; // Atualiza texto do toggle
-                         // Remove a classe 'hidden' do UL submenu (se estava lá)
+                         if (toggleBtn) toggleBtn.textContent = '-';
                          parentSubmenu.classList.remove('hidden');
                      }
                  }
 
             } else if (wikiLinks.length > 0) {
-                 // Se nenhum link estiver ativo por padrão, exibe o primeiro tópico do primeiro link da lista wikiLinks
                  const firstLink = wikiLinks[0];
                  const firstTopicKey = firstLink.dataset.contentId;
-                 console.log("loadWikiContent: Nenhum link ativo inicial, exibindo o primeiro:", firstTopicKey); // DEBUG
+                 console.log("DEBUG: loadWikiContent: Nenhum link ativo inicial, exibindo o primeiro:", firstTopicKey);
                  displayWikiTopic(firstTopicKey);
-                 updateSidebarActiveLink(firstTopicKey); // Marca o primeiro link como ativo
+                 updateSidebarActiveLink(firstTopicKey);
             } else {
-                console.warn("loadWikiContent: Nenhum link .wiki-link encontrado na sidebar."); // DEBUG
+                console.warn("DEBUG: loadWikiContent: Nenhum link .wiki-link encontrado na sidebar.");
             }
 
 
         } catch (error) {
-            console.error("loadWikiContent: Falha ao carregar o conteúdo da wiki:", error); // DEBUG
-            // Exibe uma mensagem de erro na área de conteúdo
-            if (wikiTopicTitleElement) wikiTopicTitleElement.textContent = "Erro ao Carregar Wiki";
-            if (wikiTopicHtmlContentElement) wikiTopicHtmlContentElement.innerHTML = "<p>Não foi possível carregar o conteúdo da wiki. Por favor, verifique o arquivo JSON e a conexão.</p>";
+            console.error("DEBUG: loadWikiContent: FALHA CRÍTICA ao carregar ou processar wiki content:", error); // DEBUG ERRO CRÍTICO
+             if (wikiTopicTitleElement) wikiTopicTitleElement.textContent = "Erro ao Carregar Wiki";
+             if (wikiTopicHtmlContentElement) wikiTopicHtmlContentElement.innerHTML = "<p>Não foi possível carregar o conteúdo da wiki. Por favor, verifique o arquivo JSON e a conexão.</p>";
              // Desabilita os links e toggles para evitar mais erros
             wikiLinks.forEach(link => link.style.pointerEvents = 'none');
             submenuToggles.forEach(toggle => toggle.style.pointerEvents = 'none');
@@ -77,40 +85,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Função para exibir um tópico específico com base na chave ---
     function displayWikiTopic(topicKey) {
-        console.log("displayWikiTopic: Tentando exibir tópico com chave:", topicKey); // DEBUG
+        console.log("DEBUG: displayWikiTopic: Tentando exibir tópico com chave:", topicKey);
         // Verifica se os dados da wiki foram carregados e se a chave existe
         if (wikiData && wikiData[topicKey]) {
             const topic = wikiData[topicKey];
-            console.log("displayWikiTopic: Dados do tópico encontrados:", topic); // DEBUG
+            console.log("DEBUG: displayWikiTopic: Dados do tópico encontrados:", topic);
 
-            // Atualiza o título e o conteúdo HTML
             if (wikiTopicTitleElement) wikiTopicTitleElement.textContent = topic.title || "Tópico Sem Título";
-            // Usamos innerHTML porque o conteúdo JSON pode conter tags HTML (parágrafos, listas, etc.)
             if (wikiTopicHtmlContentElement) wikiTopicHtmlContentElement.innerHTML = topic.htmlContent || "<p>Conteúdo não disponível.</p>";
 
-             // Rolar para o topo da área de conteúdo da wiki
              const wikiContentArea = document.querySelector('.wiki-content');
              if (wikiContentArea) {
-                 // Tenta rolar a div .wiki-content se for possível (se ela tiver overflow)
-                 wikiContentArea.scrollTop = 0;
-                 console.log("displayWikiTopic: Rolando div .wiki-content para o topo."); // DEBUG
-             } else if (wikiTopicTitleElement) { // Fallback: Rolar para o título do tópico
-                 console.log("displayWikiTopic: Rolando para o título do tópico."); // DEBUG
-                 wikiTopicTitleElement.scrollIntoView({ behavior: 'smooth', block: 'start' }); // Rola para o topo do elemento
+                 wikiContentArea.scrollTop = 0; // Rola a div .wiki-content
+                 console.log("DEBUG: displayWikiTopic: Rolando div .wiki-content para o topo.");
+             } else if (wikiTopicTitleElement) {
+                 console.log("DEBUG: displayWikiTopic: Rolando para o título do tópico.");
+                 wikiTopicTitleElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
              } else {
-                 console.warn("displayWikiTopic: Não foi possível rolar para o topo da área de conteúdo."); // DEBUG
+                 console.warn("DEBUG: displayWikiTopic: Não foi possível rolar para o topo da área de conteúdo.");
              }
 
 
         } else if (wikiData && typeof wikiData[topicKey] === 'undefined') {
-             // Caso a chave do link exista na sidebar, mas não nos dados carregados
-             console.warn(`displayWikiTopic: Conteúdo para a chave "${topicKey}" não encontrado nos dados carregados.`); // DEBUG
+             console.warn(`DEBUG: displayWikiTopic: Conteúdo para a chave "${topicKey}" não encontrado nos dados carregados.`);
              if (wikiTopicTitleElement) wikiTopicTitleElement.textContent = "Tópico Não Encontrado";
              if (wikiTopicHtmlContentElement) wikiTopicHtmlContentElement.innerHTML = "<p>O conteúdo para este tópico ainda não foi adicionado ao arquivo JSON, ou a chave no link está incorreta.</p>";
 
         } else {
-            // Caso os dados da wiki ainda não tenham sido carregados
-             console.warn("displayWikiTopic: Tentou exibir tópico antes do carregamento da wiki ou wikiData é nulo."); // DEBUG
+             console.warn("DEBUG: displayWikiTopic: Tentou exibir tópico antes do carregamento da wiki ou wikiData é nulo.");
              if (wikiTopicTitleElement) wikiTopicTitleElement.textContent = "Carregando...";
              if (wikiTopicHtmlContentElement) wikiTopicHtmlContentElement.innerHTML = "<p>Aguardando o carregamento do conteúdo...</p>";
         }
@@ -118,109 +120,120 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Função para atualizar o estado ativo dos links da sidebar ---
     function updateSidebarActiveLink(activeTopicKey) {
-        console.log("updateSidebarActiveLink: Marcando link com data-content-id:", activeTopicKey, "como ativo."); // DEBUG
+        console.log("DEBUG: updateSidebarActiveLink: Marcando link com data-content-id:", activeTopicKey, "como ativo.");
         wikiLinks.forEach(link => {
             link.classList.remove('active'); // Remove a classe 'active' de todos os links
         });
 
-        // Encontra o link correspondente ao tópico ativo e adiciona a classe 'active'
-        // Usamos querySelector para encontrar o link específico pelo seu data-content-id
         const activeLink = document.querySelector(`.wiki-sidebar .wiki-link[data-content-id="${activeTopicKey}"]`);
         if (activeLink) {
             activeLink.classList.add('active');
-            console.log("updateSidebarActiveLink: Link encontrado e marcado como ativo:", activeLink); // DEBUG
+            console.log("DEBUG: updateSidebarActiveLink: Link encontrado e marcado como ativo:", activeLink);
 
-            // Opcional: Garante que o sub-menu pai do link ativo esteja expandido
+            // Garante que o sub-menu pai do link ativo esteja expandido
             const parentSubmenu = activeLink.closest('.submenu'); // Encontra o UL.submenu pai
             if (parentSubmenu) {
-                 console.log("updateSidebarActiveLink: Link ativo dentro de um submenu."); // DEBUG
-                 // Encontra o <li> pai que contém o sub-menu
+                 console.log("DEBUG: updateSidebarActiveLink: Link ativo dentro de um submenu.");
                  const parentSubmenuLi = parentSubmenu.closest('li.has-submenu');
-                 if (parentSubmenuLi && parentSubmenuLi.classList.contains('has-submenu')) {
-                     console.log("updateSidebarActiveLink: Expandindo LI pai do submenu."); // DEBUG
-                     parentSubmenuLi.classList.add('expanded'); // Marca o LI pai como expandido
-                      // Encontra o botão toggle dentro do LI pai
+                 if (parentSubmenuLi) {
+                     console.log("DEBUG: updateSidebarActiveLink: Expandindo LI pai do submenu.");
+                     parentSubmenuLi.classList.add('expanded');
                      const toggleBtn = parentSubmenuLi.querySelector('.submenu-toggle');
-                     if (toggleBtn) toggleBtn.textContent = '-'; // Atualiza texto do toggle
-                     // Remove a classe 'hidden' do UL submenu (se estava lá)
-                     parentSubmenu.classList.remove('hidden');
-                 } else {
-                      console.warn("updateSidebarActiveLink: LI.has-submenu pai não encontrado para o link ativo dentro do submenu."); // DEBUG
+                     if (toggleBtn) toggleBtn.textContent = '-';
+                     parentSubmenu.classList.remove('hidden'); // Garante que o submenu está visível
                  }
             } else {
-                 console.log("updateSidebarActiveLink: Link ativo não está dentro de um submenu."); // DEBUG
+                 console.log("DEBUG: updateSidebarActiveLink: Link ativo não está dentro de um submenu.");
             }
         } else {
-            console.warn(`updateSidebarActiveLink: Link com data-content-id="${activeTopicKey}" não encontrado na sidebar.`); // DEBUG
+            console.warn(`DEBUG: updateSidebarActiveLink: Link com data-content-id="${activeTopicKey}" não encontrado na sidebar.`);
         }
     }
 
 
-    // --- Adiciona ouvintes de evento a cada link da sidebar (principal ou sub-link) ---
-    wikiLinks.forEach(link => {
-        link.addEventListener('click', function(event) {
-            event.preventDefault(); // Impede a navegação padrão da tag <a>
+    // --- ADICIONA EVENT LISTENERS ---
+    console.log("DEBUG: Anexando Event Listeners..."); // DEBUG 6
 
-            const targetTopicKey = this.dataset.contentId; // Pega a chave do tópico do atributo data-content-id
-            console.log("Link da wiki clicado. Chave:", targetTopicKey); // DEBUG
+    // Ouvintes para links da sidebar (clicar em um link mostra o conteúdo)
+    wikiLinks.forEach(link => {
+        console.log("DEBUG: Anexando listener a link:", link); // DEBUG 7
+        link.addEventListener('click', function(event) {
+            event.preventDefault(); // Impede a navegação padrão
+
+            const targetTopicKey = this.dataset.contentId;
+            console.log("DEBUG: Link da wiki clicado. Chave:", targetTopicKey);
             displayWikiTopic(targetTopicKey); // Exibe o tópico
             updateSidebarActiveLink(targetTopicKey); // Atualiza o link ativo
         });
     });
+    console.log("DEBUG: Listeners de link anexados."); // DEBUG 8
 
-    // --- Adiciona ouvintes de evento aos botões de expandir/recolher ---
+
+    // Ouvintes para botões toggle (clicar expande/recolhe submenu)
+    console.log("DEBUG: Preparando para anexar listeners a toggles:", submenuToggles); // DEBUG 9
     submenuToggles.forEach(button => {
+        console.log("DEBUG: Anexando listener a toggle:", button); // DEBUG 10
         button.addEventListener('click', function() {
-            // Encontra o <li> pai mais próximo com a classe has-submenu
+            console.log("DEBUG: Botão toggle clicado!", this);
             const parentLi = this.closest('li.has-submenu');
-             console.log("Botão toggle clicado! Botão:", this, "LI pai encontrado:", parentLi); // DEBUG
-            if (parentLi && parentLi.classList.contains('has-submenu')) { // Verifica se encontrou e é o LI correto
-                // Encontra a sub-lista (<ul>) dentro deste <li> que tem a classe 'submenu'
+            console.log("DEBUG: Toggle - LI pai encontrado:", parentLi);
+            if (parentLi) {
                 const submenuUl = parentLi.querySelector('ul.submenu'); // Adiciona 'ul' para ser mais específico
-                console.log("Submenu UL encontrado:", submenuUl); // DEBUG
+                console.log("DEBUG: Toggle - Submenu UL encontrado:", submenuUl);
                 if (submenuUl) {
-                    // Alterna a classe 'hidden' na sub-lista (controla display: none via CSS)
                     submenuUl.classList.toggle('hidden');
-                    // Alterna a classe 'expanded' no <li> pai (pode ser usado para estilização, e JS usa para inicialização)
-                    parentLi.classList.toggle('expanded'); // <--- Esta linha estava faltando
+                    parentLi.classList.toggle('expanded');
 
-                    // Atualiza o texto do botão toggle (+/-)
                     if (submenuUl.classList.contains('hidden')) {
                         this.textContent = '+';
-                        console.log("Submenu escondido. Toggle text: +"); // DEBUG
+                        console.log("DEBUG: Toggle - Submenu escondido. Toggle text: +");
                     } else {
                         this.textContent = '-';
-                         console.log("Submenu mostrado. Toggle text: -"); // DEBUG
+                         console.log("DEBUG: Toggle - Submenu mostrado. Toggle text: -");
                     }
                 } else {
-                     console.warn("Submenu UL com classe '.submenu' não encontrado dentro do LI pai:", parentLi); // DEBUG
+                    console.warn("DEBUG: Toggle - Submenu UL com classe '.submenu' não encontrado dentro do LI pai:", parentLi);
                 }
             } else {
-                console.warn("LI com classe '.has-submenu' pai não encontrado ou incorreto para o botão toggle:", this); // DEBUG
+                console.warn("DEBUG: Toggle - LI com classe '.has-submenu' pai não encontrado para o botão toggle:", this);
             }
         });
     });
+    console.log("DEBUG: Listeners de toggle anexados."); // DEBUG 11
 
-     // --- Garante que todos os submenus comecem escondidos ---
-     // Embora a classe 'hidden' já esteja no HTML, isso garante
-     // que o estado visual inicial no navegador seja correto.
-     submenus.forEach(submenu => {
-         if (!submenu.classList.contains('hidden')) {
+
+    // --- GARANTE ESTADO INICIAL CORRETO ---
+    console.log("DEBUG: Garantindo estado inicial dos submenus..."); // DEBUG 12
+    submenus.forEach(submenu => {
+        // Garante que o submenu está escondido via classe (se não estiver expandido)
+        const parentLi = submenu.closest('li.has-submenu');
+        if (parentLi && !parentLi.classList.contains('expanded') && !submenu.classList.contains('hidden')) {
              submenu.classList.add('hidden');
+        }
+         // Se o HTML marcou como hidden mas o JS expandiu na inicialização (initialActiveLink), remove o hidden
+         if (parentLi && parentLi.classList.contains('expanded') && submenu.classList.contains('hidden')) {
+             submenu.classList.remove('hidden');
          }
-     });
-     // Garante que os toggles comecem com '+'
+
+    });
+    // Garante que os toggles mostrem + ou - corretamente
      submenuToggles.forEach(toggle => {
          const parentLi = toggle.closest('li.has-submenu');
          const submenuUl = parentLi ? parentLi.querySelector('ul.submenu') : null;
           if (submenuUl && submenuUl.classList.contains('hidden')) {
              toggle.textContent = '+';
+         } else if (submenuUl) { // Se o submenu existe e NÃO está hidden (ou seja, está visível/expandido)
+             toggle.textContent = '-';
          }
      });
+     console.log("DEBUG: Estado inicial dos submenus garantido."); // DEBUG 13
 
 
-    // --- Lógica de inicialização ---
-    // Inicia o carregamento do conteúdo da wiki quando a página é carregada
+    // --- LÓGICA DE INICIALIZAÇÃO ---
+    console.log("DEBUG: Chamando loadWikiContent..."); // DEBUG 14
     loadWikiContent();
 
+    console.log("DEBUG: --- Script wiki.js finalizado (síncrono) ---"); // LOG GERAL 3
+
 }); // Fim do DOMContentLoaded
+console.log("DEBUG: --- Fim da declaração do listener DOMContentLoaded em wiki.js ---"); // LOG GERAL 4
