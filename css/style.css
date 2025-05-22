@@ -498,6 +498,7 @@ footer {
 }
 
 /* Estilos para a Seção Wiki */
+
 #wiki-section .wiki-container {
     display: flex; /* Habilita flexbox para layout lado a lado */
     gap: 20px; /* Espaço entre a barra lateral e o conteúdo */
@@ -530,94 +531,6 @@ footer {
 }
 
 .wiki-sidebar li {
-    margin-bottom: 5px;
-}
-
-.wiki-sidebar a {
-    display: block; /* Faz o link ocupar toda a largura do item da lista */
-    padding: 8px 10px;
-    text-decoration: none;
-    color: var(--cor-texto-principal);
-    background-color: var(--cor-fundo-principal); /* Fundo claro para links */
-    border: 1px solid var(--cor-input-borda);
-    border-radius: 4px;
-    transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.wiki-sidebar a:hover {
-    background-color: var(--cor-input-borda);
-    color: var(--cor-texto-principal);
-}
-
-.wiki-sidebar a.active {
-    background-color: var(--cor-destaque1); /* Cor de destaque para o link ativo */
-    color: var(--cor-fundo-principal);
-    font-weight: bold;
-    border-color: var(--cor-destaque1);
-}
-
-
-.wiki-content {
-    flex: 1; /* Ocupa o espaço restante */
-    /* Os estilos .box já dão padding, borda, etc. */
-}
-
-.wiki-topic-content {
-    margin-bottom: 20px;
-    /* Os estilos .hidden e .active abaixo controlarão a exibição */
-}
-
-/* Controla qual tópico da Wiki é visível */
-.wiki-topic-content.hidden {
-    display: none;
-}
-
-.wiki-topic-content.active {
-    display: block; /* Ou o display que faz sentido para o conteúdo (block, flex, grid) */
-}
-
-
-/* --- Estilos Responsivos (dentro do @media) --- */
-@media (max-width: 768px) {
-    /* ... (Estilos responsivos existentes) ... */
-
-    /* Ajustes para a Wiki em telas menores */
-    #wiki-section .wiki-container {
-        flex-direction: column; /* Empilha a barra lateral e o conteúdo */
-    }
-
-    .wiki-sidebar {
-        flex-basis: auto; /* Remove a largura fixa */
-        width: 100%; /* Ocupa a largura total */
-    }
-    .wiki-sidebar ul {
-        display: flex; /* Usa flexbox para os links da sidebar */
-        flex-wrap: wrap; /* Permite que os links quebrem linha */
-        gap: 5px; /* Espaço entre os links */
-        justify-content: center; /* Centraliza os links */
-    }
-    .wiki-sidebar li {
-        margin-bottom: 0; /* Remove margem inferior dos itens da lista flex */
-        flex-basis: auto; /* Permite que os links se ajustem ao conteúdo */
-    }
-     .wiki-sidebar a {
-        padding: 5px 8px; /* Padding menor nos links da sidebar */
-     }
-
-    .wiki-content {
-        flex-basis: auto; /* Remove a base flex */
-        width: 100%; /* Ocupa a largura total */
-    }
-}
-
-/* Estilos para a Sidebar com Sub-menus */
-.wiki-sidebar ul ul { /* Estilos para sub-listas aninhadas */
-    padding-left: 15px; /* Indentação para sub-itens */
-    margin-top: 5px; /* Espaço acima da sub-lista */
-    border-left: 2px solid rgba(139, 90, 43, 0.3); /* Linha sutil indicando aninhamento */
-}
-
-.wiki-sidebar li {
      margin-bottom: 3px; /* Espaço menor entre itens da lista */
 }
 
@@ -626,7 +539,8 @@ footer {
     display: flex; /* Para alinhar o link e o botão toggle */
     align-items: center;
     justify-content: space-between; /* Espaça link e botão */
-     margin-bottom: 3px; /* Espaço abaixo do header */
+     /* margin-bottom: 3px; */ /* Remover esta margem para não ter espaço extra */
+     line-height: 1.4; /* Ajuste a altura da linha se necessário */
 }
 
 .wiki-sidebar .submenu-header .wiki-link {
@@ -651,40 +565,92 @@ footer {
     border: 1px solid var(--cor-bordas);
     padding: 2px 6px; /* Padding pequeno */
     font-size: 0.9em;
-    line-height: 1; /* Para centralizar o texto */
+    line-height: 1; /* Para centralizar o texto + ou - */
     border-radius: 3px;
     cursor: pointer;
     min-width: 20px; /* Largura mínima para o + */
     text-align: center;
      transition: background-color 0.2s ease;
+     flex-shrink: 0; /* Impede que o botão encolha em layouts flex */
 }
 .wiki-sidebar .submenu-toggle:hover {
      background-color: var(--cor-bordas);
      color: var(--cor-fundo-principal);
 }
 
+
+/* !!!!! REGRAS ESSENCIAIS PARA OCULTAR/MOSTRAR SUBMENUS !!!!! */
+
 /* Esconder sub-menus por padrão */
-.wiki-sidebar .submenu.hidden {
+.wiki-sidebar ul.submenu.hidden {
     display: none;
+}
+
+/* Mostrar sub-menus quando o LI pai tiver a classe 'expanded' */
+.wiki-sidebar li.has-submenu.expanded > ul.submenu:not(.hidden) {
+     display: block; /* OU display: flex; se você estilizar o submenu interno como flex */
+}
+
+/* Ajuste o texto do botão toggle quando o LI pai tiver a classe 'expanded' */
+/* Isso é uma alternativa visual ao JS mudando o texto, ou pode ser usado junto */
+.wiki-sidebar li.has-submenu.expanded .submenu-toggle {
+    /* Content property só funciona em pseudo-elementos como ::before/::after */
+    /* Para mudar o texto real do botão, é melhor usar JS como já fizemos */
+     /* Exemplo: se quiser um fundo diferente para o toggle expandido */
+     /* background-color: var(--cor-destaque1); */
+     /* color: var(--cor-fundo-principal); */
+}
+
+/* !!!!! FIM DAS REGRAS ESSENCIAIS !!!!! */
+
+
+/* Estilos para sub-listas aninhadas (indentação, borda) */
+.wiki-sidebar ul ul { /* Estilos para sub-listas aninhadas */
+    padding-left: 15px; /* Indentação para sub-itens */
+    margin-top: 5px; /* Espaço acima da sub-lista */
+    border-left: 2px solid rgba(139, 90, 43, 0.3); /* Linha sutil indicando aninhamento */
 }
 
 /* Estilos para os links dentro do submenu */
 .wiki-sidebar .submenu a {
+    display: block; /* Faz o link ocupar toda a largura disponível */
     background-color: var(--cor-fundo-principal); /* Fundo para links de sub-itens */
     border: 1px solid var(--cor-input-borda); /* Borda para links de sub-itens */
     padding: 6px 10px; /* Padding ligeiramente menor */
     font-size: 0.95em;
     margin-bottom: 3px; /* Espaço entre links de sub-itens */
+    border-radius: 4px;
+    text-decoration: none; /* Garante que links não estejam sublinhados */
+    color: var(--cor-texto-principal); /* Cor do texto padrão */
+    transition: background-color 0.2s ease;
+}
+.wiki-sidebar .submenu a:hover {
+    background-color: var(--cor-input-borda);
 }
 .wiki-sidebar .submenu a.active {
      background-color: var(--cor-destaque2); /* Cor de destaque diferente para sub-links ativos */
      color: var(--cor-fundo-principal);
      border-color: var(--cor-destaque2);
+     font-weight: bold;
 }
+
+
+.wiki-content {
+    flex: 1; /* Ocupa o espaço restante */
+    /* Os estilos .box já dão padding, borda, etc. */
+}
+
+.wiki-topic-content {
+    margin-bottom: 20px;
+    /* A classe .hidden e .active no JS controlará a exibição,
+       mas agora só precisamos dela no HTML inicial.
+       O JS displayWikiTopic vai carregar o conteúdo em um único lugar. */
+}
+
 
 /* --- Estilos Responsivos (dentro do @media) --- */
 @media (max-width: 768px) {
-    /* ... (Estilos responsivos existentes da Wiki) ... */
+    /* ... (Estilos responsivos existentes) ... */
 
     /* Ajustes para a Sidebar com Sub-menus em telas menores */
     .wiki-sidebar ul {
@@ -702,6 +668,7 @@ footer {
          border-radius: 4px; /* Arredondar borda */
          background-color: var(--cor-fundo-principal); /* Fundo para o header */
          padding: 5px 10px; /* Padding para o header */
+         line-height: normal; /* Resetar line-height */
     }
 
     .wiki-sidebar .submenu-header .wiki-link {
@@ -715,20 +682,25 @@ footer {
 
      .wiki-sidebar .submenu-toggle {
         padding: 4px 8px; /* Ajustar padding do toggle responsivo */
+        font-size: 1em; /* Tamanho um pouco maior */
      }
 
+     /* Remove indentação e borda das sub-listas em mobile, se preferir */
+    /* .wiki-sidebar ul ul {
+        padding-left: 0;
+        border-left: none;
+    } */
 
-    .wiki-sidebar ul ul { /* Estilos para sub-listas aninhadas responsivas */
+     .wiki-sidebar ul ul { /* Manter indentação e borda em mobile */
         padding-left: 10px; /* Menos indentação */
         margin-top: 2px;
         border-left: 1px solid rgba(139, 90, 43, 0.3);
     }
+
      .wiki-sidebar .submenu a {
         padding: 5px 8px; /* Menos padding para sub-links responsivos */
      }
 }
 
-/* Adicionar ou modificar no seu style.css */
-.wiki-sidebar .submenu.hidden {
-    display: none !important; /* Adicione !important para teste */
-}
+/* Opcional: Ajustes ainda menores para smartphones */
+/* ... (outras media queries, se tiver) ... */
