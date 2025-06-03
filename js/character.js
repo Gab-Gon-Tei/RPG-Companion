@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Adicione mais objetos { value: 'caminho/da/imagem.png', text: 'Nome para o Select' }
     ];
 
+
     // --- REFERÊNCIAS DOS ELEMENTOS HTML ---
     // Ficha Principal e Inventário estão combinados aqui
     const characterFormFields = {
@@ -167,7 +168,8 @@ document.addEventListener('DOMContentLoaded', function() {
         historyMod: { span: document.getElementById('historyMod'), attr: 'intelligence' },
         insightMod: { span: document.getElementById('insightMod'), attr: 'wisdom' },
         intimidationMod: { span: document.getElementById('intimidationMod'), attr: 'charisma' },
-        investigationMod: { span: document('investigationMod'), attr: 'intelligence' }, // <-- Possível erro aqui! document() em vez de document.getElementById()
+        // CORREÇÃO APLICADA AQUI: document() -> document.getElementById()
+        investigationMod: { span: document.getElementById('investigationMod'), attr: 'intelligence' },
         medicineMod: { span: document.getElementById('medicineMod'), attr: 'wisdom' },
         natureMod: { span: document.getElementById('natureMod'), attr: 'intelligence' },
         perceptionMod: { span: document.getElementById('perceptionMod'), attr: 'wisdom' },
@@ -241,7 +243,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function getCharacterLevel() { if (!characterFormFields.charClassLevel || !characterFormFields.charClassLevel.value) return 1; const classLevelString = characterFormFields.charClassLevel.value; const match = classLevelString.match(/\d+$/) || classLevelString.match(/\d+/); return match ? parseInt(match[0]) : 1; }
     function updateAbilityModifiers() { const scores = { strength: characterFormFields.strengthScore ? parseInt(characterFormFields.strengthScore.value) : null, dexterity: characterFormFields.dexterityScore ? parseInt(characterFormFields.dexterityScore.value) : null, constitution: characterFormFields.constitutionScore ? parseInt(characterFormFields.constitutionScore.value) : null, intelligence: characterFormFields.intelligenceScore ? parseInt(characterFormFields.intelligenceScore.value) : null, wisdom: characterFormFields.wisdomScore ? parseInt(characterFormFields.wisdomScore.value) : null, charisma: characterFormFields.charismaScore ? parseInt(characterFormFields.charismaScore.value) : null, }; for (const attr in scores) { const modifier = getAbilityModifier(scores[attr]); const spanId = `${attr}Mod`; if (attributeModifiersSpans[spanId]) { attributeModifiersSpans[spanId].textContent = (modifier >= 0 ? '+' : '') + modifier; } } }
     function updateProficiencyBonus() { const level = getCharacterLevel(); const bonus = getProficiencyBonus(level); if (characterFormFields.proficiencyBonus) { characterFormFields.proficiencyBonus.value = bonus; } return bonus; }
-    function updateSavingThrows() { const profBonus = characterFormFields.proficiencyBonus ? (parseInt(characterFormFields.proficiencyBonus.value) || 0) : 0; const attributes = ['str', 'dex', 'con', 'int', 'wis', 'cha']; const fullAttributeNames = { str: 'strength', dex: 'dexterity', con: 'constitution', int: 'intelligence', wis: 'wisdom', cha: 'charisma' }; attributes.forEach(shortAttr => { const fullAttr = fullAttributeNames[shortAttr]; const scoreInput = characterFormFields[`${fullAttr}Score`]; const score = scoreInput ? parseInt(scoreInput.value) : null; const attrMod = getAbilityModifier(score); const profCheckbox = characterFormFields[`${shortAttr}SaveProf`]; const isProficient = profCheckbox ? profCheckbox.checked : false; const totalMod = attrMod + (isProficient ? profBonus : 0); const modSpan = savingThrowModifiersSpans[`${shortAttr}SaveMod`]; if (modSpan) { modSpan.textContent = (totalMod >= 0 ? '+' : '') + totalMod; } }); }
+    function updateSavingThrows() { const profBonus = characterFormFields.proficiencyBonus ? (parseInt(characterFormFields.proficiencyBonus.value) || 0) : 0; const attributes = ['str', 'dex', 'con', 'int', 'wis', 'cha']; const fullAttributeNames = { str: 'strength', dex: 'dexterity', con: 'constitution', int: 'intelligence', wis: 'wisdom', cha: 'charisma' }; attributes.forEach(shortAttr => { const fullAttr = fullAttributeNames[shortAttr]; const scoreInput = characterFormFields[`${fullAttr}Score`]; const score = scoreInput ? parseInt(scoreInput.value) : null; const attrMod = getAbilityModifier(score); const profCheckbox = characterFormFields[`${shortAttr}SaveProf`]; const isProficient = profCheckbox ? profCheckbox.checked : false; const totalMod = attrMod + (isProficient ? profBonus : 0); const modSpan = savingThrowModifiersSpans[`${shortAttr}SaveMod`]; if (modSpan) { modSpan.textContent = (totalMod >= 0 ? '+' : '') + totalMod; } } ); }
     function updateSkills() { const profBonus = characterFormFields.proficiencyBonus ? (parseInt(characterFormFields.proficiencyBonus.value) || 0) : 0; for (const skillKey in skillModifiersSpans) { const skillInfo = skillModifiersSpans[skillKey]; const profCheckboxId = `${skillKey.replace('Mod', 'Prof')}`; const profCheckbox = characterFormFields[profCheckboxId]; const scoreInput = characterFormFields[`${skillInfo.attr}Score`]; const score = scoreInput ? parseInt(scoreInput.value) : null; const attrMod = getAbilityModifier(score); const isProficient = profCheckbox ? profCheckbox.checked : false; const totalMod = attrMod + (isProficient ? profBonus : 0); if (skillInfo.span) { skillInfo.span.textContent = (totalMod >= 0 ? '+' : '') + totalMod; } } }
     function updateInitiative() { const dexScore = characterFormFields.dexterityScore ? parseInt(characterFormFields.dexterityScore.value) : null; const dexMod = getAbilityModifier(dexScore); if (characterFormFields.initiative) { characterFormFields.initiative.value = (dexMod >= 0 ? '+' : '') + dexMod; } }
     function updatePassivePerception() { const profBonus = characterFormFields.proficiencyBonus ? (parseInt(characterFormFields.proficiencyBonus.value) || 0) : 0; const wisScore = characterFormFields.wisdomScore ? parseInt(characterFormFields.wisdomScore.value) : null; const wisMod = getAbilityModifier(wisScore); let perceptionModValue = wisMod; if (characterFormFields.perceptionProf && characterFormFields.perceptionProf.checked) { perceptionModValue += profBonus; } const passivePerception = 10 + perceptionModValue; if (characterFormFields.passiveWisdom) { characterFormFields.passiveWisdom.value = passivePerception; } }
@@ -250,7 +252,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- FUNÇÕES DE INVENTÁRIO EQUIPADO ---
 
     function populateImageSelects() {
-        console.log("DEBUG: populateImageSelects: Populando selects de imagem.");
+        console.log("DEBUG: populateImageSelects: Populando selects de imagem."); // DEBUG
         const selects = [
             characterFormFields.mainHandImageSelect,
             characterFormFields.armorImageSelect,
@@ -267,9 +269,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     select.appendChild(option);
                 });
                  select.dispatchEvent(new Event('change')); // Dispara o evento 'change' para atualizar a imagem inicial
-            } else { console.warn("DEBUG: populateImageSelects: Elemento select de imagem não encontrado!"); }
+            } else {
+                console.warn("DEBUG: populateImageSelects: Elemento select de imagem não encontrado!"); // DEBUG
+            }
         });
-         console.log("DEBUG: populateImageSelects: Selects de imagem populados e imagens iniciais atualizadas.");
+         console.log("DEBUG: populateImageSelects: Selects de imagem populados e imagens iniciais atualizadas."); // DEBUG
     }
 
     function updateEquippedImage(selectElement) {
@@ -278,9 +282,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const imageElementId = selectElement.id.replace('-select', '');
         const imageElement = document.getElementById(imageElementId);
         if (imageElement && imageElement.tagName === 'IMG') {
-            imageElement.src = imageUrl || '';
-            imageElement.alt = selectElement.options[selectElement.selectedIndex].text || selectElement.id.replace('-image-select', '');
-            console.log(`DEBUG: updateEquippedImage: Imagem para ${imageElementId} atualizada para "${imageUrl}".`);
+            imageElement.src = imageUrl || ''; // Define a URL da imagem, ou string vazia para o atributo src se "Nenhuma Imagem"
+             imageElement.alt = selectElement.options[selectElement.selectedIndex].text || selectElement.id.replace('-image-select', ''); // Define o alt da imagem
+            console.log(`DEBUG: updateEquippedImage: Imagem para ${imageElementId} atualizada para "${imageUrl}".`); // DEBUG
         } else { console.warn(`DEBUG: updateEquippedImage: Tag <img> com ID "${imageElementId}" não encontrada.`); }
     }
 
@@ -383,25 +387,25 @@ document.addEventListener('DOMContentLoaded', function() {
          if (companionElements.hitDiceHealResult) { companionElements.hitDiceHealResult.textContent = ''; }
          console.log("DEBUG: populateCompanionView: View populada.");
     }
-     function applyDamage() { if (!currentCharacterData || !companionElements.hpChangeValue || !companionElements.currentHP || !companionElements.tempHP) { console.warn("applyDamage: Elementos ou dados necessários não encontrados."); return; } const damage = parseInt(companionElements.hpChangeValue.value); if (isNaN(damage) || damage <= 0) { console.log("applyDamage: Valor de dano inválido."); return; } console.log(`DEBUG: applyDamage: Aplicando ${damage} de dano.`); let currentHp = parseInt(currentCharacterData.hpCurrent || 0); let tempHp = parseInt(currentCharacterData.hpTemp || 0); if (tempHp > 0) { if (damage <= tempHp) { tempHp -= damage; console.log(`DEBUG: applyDamage: Dano absorvido por PV Temp. PV Temp restantes: ${tempHp}.`); } else { const remainingDamage = damage - tempHp; console.log(`DEBUG: applyDamage: PV Temp esgotados (${tempHp}). Dano restante: ${remainingDamage}.`); currentHp -= remainingDamage; tempHp = 0; } } else { currentHp -= damage; console.log(`DEBUG: applyDamage: Dano direto. PV Atuais: ${currentHp}.`); } currentHp = Math.max(0, currentHp); currentCharacterData.hpCurrent = currentHp; currentCharacterData.hpTemp = tempHp; updateCompanionHPDisplay(); companionElements.hpChangeValue.value = ''; console.log(`DEBUG: applyDamage: Status final - PV Atuais: ${currentCharacterData.hpCurrent}, PV Temp: ${currentCharacterData.hpTemp}.`); }
-    function applyHealing() { if (!currentCharacterData || !companionElements.hpChangeValue || !companionElements.currentHP || !companionElements.maxHP) { console.warn("applyHealing: Elementos ou dados necessários não encontrados."); return; } const healing = parseInt(companionElements.hpChangeValue.value); if (isNaN(healing) || healing <= 0) { console.log("applyHealing: Valor de cura inválido."); return; } console.log(`DEBUG: applyHealing: Aplicando ${healing} de cura.`); let currentHp = parseInt(currentCharacterData.hpCurrent || 0); const maxHp = parseInt(currentCharacterData.hpMax || 0); currentHp = Math.min(maxHp, currentHp + healing); console.log(`DEBUG: applyHealing: PV Atuais antes: ${currentCharacterData.hpCurrent}. PV Max: ${maxHp}. PV Atuais depois: ${currentHp}.`); currentCharacterData.hpCurrent = currentHp; updateCompanionHPDisplay(); companionElements.hpChangeValue.value = ''; }
-    function addOrSetTempHP() { if (!currentCharacterData || !companionElements.tempHpValue) { console.warn("addOrSetTempHP: Elementos ou dados necessários não encontrados."); return; } const amount = parseInt(companionElements.tempHpValue.value); if (isNaN(amount) || amount < 0) { console.log("addOrSetTempHP: Valor de PV Temp inválido."); return; } console.log(`DEBUG: addOrSetTempHP: Definindo/Adicionando ${amount} PV Temp.`); const newTempHp = Math.max(currentCharacterData.hpTemp || 0, amount); if (newTempHp > (currentCharacterData.hpTemp || 0)) { currentCharacterData.hpTemp = newTempHp; console.log(`DEBUG: addOrSetTempHP: Novos PV Temp (${newTempHp}) são maiores ou iguais aos atuais. Definindo.`); } else { console.log(`DEBUG: addOrSetTempHP: Novos PV Temp (${amount}) são menores que os atuais (${currentCharacterData.hpTemp}). Mantendo atuais.`); } updateCompanionHPDisplay(); companionElements.tempHpValue.value = ''; }
-    function removeTempHP() { if (!currentCharacterData) { console.warn("removeTempHP: currentCharacterData é nulo."); return; } console.log("DEBUG: removeTempHP: Removendo todos os PV Temp."); currentCharacterData.hpTemp = 0; updateCompanionHPDisplay(); }
-    function updateCompanionHPDisplay() { if (!currentCharacterData || !companionElements.currentHP || !companionElements.tempHP || !companionElements.removeTempHpButton) { console.warn("DEBUG: updateCompanionHPDisplay: Elementos do companion não encontrados para atualizar display."); return; } companionElements.currentHP.textContent = currentCharacterData.hpCurrent || 0; companionElements.tempHP.textContent = currentCharacterData.tempHP || 0; companionElements.removeTempHpButton.style.display = (currentCharacterData.tempHP && currentCharacterData.tempHP > 0) ? 'inline-block' : 'none'; console.log(`DEBUG: updateCompanionHPDisplay: Display atualizado - PV Atuais: ${currentCharacterData.currentHP}, PV Temp: ${currentCharacterData.tempHP}.`); }
+     function applyDamage() { if (!currentCharacterData || !companionElements.hpChangeValue || !companionElements.currentHP || !companionElements.tempHP) { console.warn("applyDamage: Elementos ou dados necessários não encontrados."); return; } const damage = parseInt(companionElements.hpChangeValue.value); if (isNaN(damage) || damage <= 0) { console.log("applyDamage: Valor de dano inválido."); return; } console.log(`DEBUG: applyDamage: Aplicando ${damage} de dano.`); let currentHp = parseInt(currentCharacterData.hpCurrent || 0); let tempHp = parseInt(currentCharacterData.tempHP || 0); if (tempHp > 0) { if (damage <= tempHp) { tempHp -= damage; console.log(`DEBUG: applyDamage: Dano absorvido por PV Temp. PV Temp restantes: ${tempHp}.`); } else { const remainingDamage = damage - tempHp; console.log(`DEBUG: applyDamage: PV Temp esgotados (${tempHp}). Dano restante: ${remainingDamage}.`); currentHp -= remainingDamage; tempHp = 0; } } else { currentHp -= damage; console.log(`DEBUG: applyDamage: Dano direto. PV Atuais: ${currentHp}.`); } currentHp = Math.max(0, currentHp); currentCharacterData.currentHP = currentHp; currentCharacterData.tempHP = tempHp; updateCompanionHPDisplay(); companionElements.hpChangeValue.value = ''; console.log(`DEBUG: applyDamage: Status final - PV Atuais: ${currentCharacterData.currentHP}, PV Temp: ${currentCharacterData.tempHP}.`); }
+    function applyHealing() { if (!currentCharacterData || !companionElements.hpChangeValue || !companionElements.currentHP || !companionElements.maxHP) { console.warn("applyHealing: Elementos ou dados necessários não encontrados."); return; } const healing = parseInt(companionElements.hpChangeValue.value); if (isNaN(healing) || healing <= 0) { console.log("applyHealing: Valor de cura inválido."); return; } console.log(`DEBUG: applyHealing: Aplicando ${healing} de cura.`); let currentHp = parseInt(currentCharacterData.currentHP || 0); const maxHp = parseInt(currentCharacterData.hpMax || 0); currentHp = Math.min(maxHp, currentHp + healing); console.log(`DEBUG: applyHealing: PV Atuais antes: ${currentCharacterData.currentHP}. PV Max: ${maxHp}. PV Atuais depois: ${currentHp}.`); currentCharacterData.currentHP = currentHp; updateCompanionHPDisplay(); companionElements.hpChangeValue.value = ''; }
+    function addOrSetTempHP() { if (!currentCharacterData || !companionElements.tempHpValue) { console.warn("addOrSetTempHP: Elementos ou dados necessários não encontrados."); return; } const amount = parseInt(companionElements.tempHpValue.value); if (isNaN(amount) || amount < 0) { console.log("addOrSetTempHP: Valor de PV Temp inválido."); return; } console.log(`DEBUG: addOrSetTempHP: Definindo/Adicionando ${amount} PV Temp.`); const newTempHp = Math.max(currentCharacterData.tempHP || 0, amount); if (newTempHp > (currentCharacterData.tempHP || 0)) { currentCharacterData.tempHP = newTempHp; console.log(`DEBUG: addOrSetTempHP: Novos PV Temp (${newTempHp}) são maiores ou iguais aos atuais. Definindo.`); } else { console.log(`DEBUG: addOrSetTempHP: Novos PV Temp (${amount}) são menores que os atuais (${currentCharacterData.tempHP}). Mantendo atuais.`); } updateCompanionHPDisplay(); companionElements.tempHpValue.value = ''; }
+    function removeTempHP() { if (!currentCharacterData) { console.warn("removeTempHP: currentCharacterData é nulo."); return; } console.log("DEBUG: removeTempHP: Removendo todos os PV Temp."); currentCharacterData.tempHP = 0; updateCompanionHPDisplay(); }
+    function updateCompanionHPDisplay() { if (!currentCharacterData || !companionElements.currentHP || !companionElements.tempHP || !companionElements.removeTempHpButton) { console.warn("DEBUG: updateCompanionHPDisplay: Elementos do companion não encontrados para atualizar display."); return; } companionElements.currentHP.textContent = currentCharacterData.currentHP || 0; companionElements.tempHP.textContent = currentCharacterData.tempHP || 0; companionElements.removeTempHpButton.style.display = (currentCharacterData.tempHP && currentCharacterData.tempHP > 0) ? 'inline-block' : 'none'; console.log(`DEBUG: updateCompanionHPDisplay: Display atualizado - PV Atuais: ${currentCharacterData.currentHP}, PV Temp: ${currentCharacterData.tempHP}.`); }
     function spendHitDice() { if (!currentCharacterData || !companionElements.hitDiceToSpend || !companionElements.hitDiceTypeSpend || !companionElements.hitDiceHealResult || !characterFormFields.constitutionScore) { console.warn("DEBUG: spendHitDice: Elementos ou dados necessários não encontrados."); return; } const numDiceToSpend = parseInt(companionElements.hitDiceToSpend.value); const diceTypeString = companionElements.hitDiceTypeSpend.value; const conScore = parseInt(characterFormFields.constitutionScore.value) || 10; const conMod = getAbilityModifier(conScore); if (isNaN(numDiceToSpend) || numDiceToSpend <= 0 || !diceTypeString) { alert("Por favor, insira um número válido de dados e selecione um tipo."); console.log("DEBUG: spendHitDice: Input de dados ou tipo inválido."); return; } console.log(`DEBUG: spendHitDice: Gastando ${numDiceToSpend}${diceTypeString}. CON Mod: ${conMod}.`); let totalHealed = 0; const diceSize = parseInt(diceTypeString.substring(1)); if (isNaN(diceSize) || diceSize <= 0) { alert("Tipo de dado de vida inválido selecionado."); console.warn(`DEBUG: spendHitDice: Tipo de dado inválido: ${diceTypeString}.`); return; } for (let i = 0; i < numDiceToSpend; i++) { const roll = Math.floor(Math.random() * diceSize) + 1; totalHealed += Math.max(1, roll + conMod); console.log(`DEBUG: spendHitDice: Rolagem individual ${i+1}: ${roll} + ${conMod} = ${roll + conMod} (min 1)`); } console.log(`DEBUG: spendHitDice: Total curado antes de aplicar: ${totalHealed} PV.`); companionElements.hitDiceHealResult.textContent = `+${totalHealed}`; let currentHp = parseInt(currentCharacterData.currentHP || 0); const maxHp = parseInt(currentCharacterData.hpMax || 0); currentHp = Math.min(maxHp, currentHp + totalHealed); console.log(`DEBUG: spendHitDice: PV Atuais antes: ${currentCharacterData.currentHP}. PV Max: ${maxHp}. PV Atuais depois: ${currentHp}.`); currentCharacterData.currentHP = currentHp; updateCompanionHPDisplay(); alert(`Você gastou ${numDiceToSpend}${diceTypeString} e recuperou ${totalHealed} PV. (Lógica de contagem de dados de vida restantes ainda pendente)`); }
     function saveCompanionChangesToMainSheet() {
         console.log("DEBUG: saveCompanionChangesToMainSheet: Chamada."); // DEBUG FUNCTION CALL 4
         if (!currentCharacterData) { alert("Nenhum personagem ativo no companion para salvar mudanças."); console.warn("DEBUG: saveCompanionChangesToMainSheet: currentCharacterData é nulo. Não foi possível sincronizar."); return; }
         console.log("DEBUG: saveCompanionChangesToMainSheet: Sincronizando dados do companion para a ficha principal.");
         if (characterFormFields.hpCurrent && currentCharacterData.hpCurrent !== undefined) characterFormFields.hpCurrent.value = currentCharacterData.hpCurrent;
-        if (characterFormFields.hpTemp && currentCharacterData.hpTemp !== undefined) characterFormFields.hpTemp.value = currentCharacterData.hpTemp;
+        if (characterFormFields.hpTemp && currentCharacterData.tempHP !== undefined) characterFormFields.hpTemp.value = currentCharacterData.tempHP; // <-- Usa tempHP do currentCharacterData
         if (characterFormFields.deathSaveSuccess1 && companionElements.dsS1) characterFormFields.deathSaveSuccess1.checked = companionElements.dsS1.checked;
         if (characterFormFields.deathSaveSuccess2 && companionElements.dsS2) characterFormFields.deathSaveSuccess2.checked = companionElements.dsS2.checked;
         if (characterFormFields.deathSaveSuccess3 && companionElements.dsS3) characterFormFields.deathSaveSuccess3.checked = companionElements.dsS3.checked;
         if (characterFormFields.deathSaveFail1 && companionElements.dsF1) characterFormFields.deathSaveFail1.checked = companionElements.dsF1.checked;
         if (characterFormFields.deathSaveFail2 && companionElements.dsF2) characterFormFields.deathSaveFail2.checked = companionElements.dsF2.checked;
         if (characterFormFields.deathSaveFail3 && companionElements.dsF3) characterFormFields.deathSaveFail3.checked = companionElements.dsF3.checked;
-        saveCharacter(); // Salva toda a ficha (incluindo inventário)
+        saveCharacter();
         console.log("DEBUG: saveCompanionChangesToMainSheet: Sincronização completa e salvamento realizado.");
     }
      function getEmptyCharacterDataForCompanion() {
@@ -464,11 +468,11 @@ document.addEventListener('DOMContentLoaded', function() {
      if (companionElements.saveCompanionChangesButton) companionElements.saveCompanionChangesButton.addEventListener('click', saveCompanionChangesToMainSheet); else console.warn("DEBUG: Botão saveCompanionChangesButton não encontrado.");
 
     document.querySelectorAll('.comp-ds').forEach(cb => {
-         console.log("DEBUG: Anexando listener 'change' a checkbox de Death Save."); // DEBUG LISTENERS
+         console.log(`DEBUG: Anexando listener 'change' a checkbox de Death Save: ${cb.id}`); // DEBUG LISTENERS
          cb.addEventListener('change', function() {
-             if (currentCharacterData) {
-                 const key = this.id.replace('comp', '');
-                 const dataKey = key.charAt(0).toLowerCase() + key.slice(1);
+             if (currentCharacterData) { // Sincroniza apenas se houver um personagem carregado
+                 const key = this.id.replace('comp', ''); // ex: "compDeathSaveSuccess1" -> "DeathSaveSuccess1"
+                 const dataKey = key.charAt(0).toLowerCase() + key.slice(1); // "DeathSaveSuccess1" -> "deathSaveSuccess1"
                  if (typeof currentCharacterData[dataKey] !== 'undefined') { currentCharacterData[dataKey] = this.checked; console.log(`DEBUG: Companion Death Save "${dataKey}" mudado para ${this.checked}. Sincronizado internamente.`); }
                  else { console.warn(`DEBUG: Tentou sincronizar chave de death save inexistente no currentCharacterData: "${dataKey}"`); }
              } else { console.warn("DEBUG: Companion Death Save mudado, mas nenhum personagem carregado para sincronizar."); }
@@ -490,7 +494,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Listener para o botão Salvar Inventário
     if (saveInventoryButton) {
-         saveInventoryButton.addEventListener('click', saveCharacter);
+         saveInventoryButton.addEventListener('click', saveCharacter); // Botão salvar inventário chama a função geral de salvar
          console.log("DEBUG: Listener anexado ao botão Salvar Inventário."); // DEBUG LISTENERS 8
     } else { console.warn("DEBUG: Botão Salvar Inventário não encontrado."); }
 
@@ -510,11 +514,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     console.log("DEBUG: Listeners de selects de imagem anexados."); // DEBUG LISTENERS 9
 
-
     // --- LÓGICA DE INICIALIZAÇÃO (Executada quando o DOM está pronto) ---
     console.log("DEBUG: Iniciando character.js - Bloco de inicialização."); // DEBUG INIT 1
 
     // 1. Popula os selects de imagem assim que o DOM estiver pronto
+    // Isso deve ser feito ANTES de tentar carregar dados salvos que definiriam a opção selecionada
     populateImageSelects();
     console.log("DEBUG: populateImageSelects chamado."); // DEBUG INIT 2
 
@@ -544,6 +548,7 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         console.log("DEBUG: Nenhum dado inicial no localStorage encontrado."); // DEBUG INIT 8
         // Se não houver dados salvos, garante que o companion mostre estado vazio
+        // A ficha e inventário já estão no estado limpo/vazio por padrão no HTML.
         populateCompanionView(getEmptyCharacterDataForCompanion()); // Popula Companion com dados vazios baseados no HTML atual
          console.log("DEBUG: populateCompanionView com dados vazios chamado na inicialização."); // DEBUG INIT 9
     }
