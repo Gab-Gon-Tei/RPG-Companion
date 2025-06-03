@@ -998,3 +998,208 @@ footer {
     /* bottom: 0; */
     /* width: 100%; */
 }
+
+#inventory-section h2 {
+     /* Já estilizado pela regra geral section h2 */
+}
+
+.equipped-items-container {
+    display: grid; /* Usar grid para o layout das 3 colunas */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Layout responsivo com min 280px */
+    gap: 20px; /* Espaço entre as colunas */
+    margin-bottom: 30px;
+}
+
+.equipped-slot {
+    /* Os estilos .box já dão padding, borda, etc. */
+    display: flex; /* Usar flexbox para alinhar a imagem e os detalhes dentro do slot */
+    flex-direction: column; /* Empilha o título H3 e o conteúdo */
+     /* Adicionar uma altura mínima se quiser que fiquem alinhados visualmente */
+    /* min-height: 400px; */
+}
+
+.equipped-slot h3 {
+     /* Já estilizado pela regra geral .box h3 */
+     text-align: center; /* Centraliza o título do slot */
+     margin-bottom: 10px; /* Espaço abaixo do título */
+}
+
+.equipped-slot .slot-content {
+     display: flex; /* Layout flexível para imagem e detalhes */
+     gap: 15px; /* Espaço entre imagem e detalhes */
+     flex-direction: column; /* Empilha imagem e detalhes por padrão (para mobile) */
+     flex-grow: 1; /* Permite que o conteúdo cresça para preencher o slot */
+}
+
+.equipped-slot .slot-image-area {
+    text-align: center;
+     flex-shrink: 0; /* Impede a área da imagem de encolher */
+     /* Se quiser altura fixa para a imagem em desktop: */
+    /* flex-basis: 180px; */
+    /* height: 180px; */
+     position: relative; /* Para posicionamento absoluto se necessário */
+}
+
+.equipped-item-image {
+    max-width: 100%; /* Garante que a imagem não estoure o container */
+    max-height: 150px; /* Limita a altura da imagem */
+    height: auto; /* Mantém a proporção */
+    display: block; /* Remove espaço extra abaixo da imagem */
+    margin: 0 auto 10px auto; /* Centraliza e adiciona espaço abaixo */
+    border: 1px solid var(--cor-input-borda); /* Borda sutil */
+    background-color: #eee; /* Fundo placeholder */
+}
+
+.equipped-slot .image-selector {
+     display: block; /* Para ocupar sua linha */
+     margin: 0 auto; /* Centraliza o select */
+     width: calc(100% - 16px); /* Ocupa a largura do slot com padding */
+     max-width: 180px; /* Limita a largura */
+}
+
+.equipped-slot .slot-details {
+     flex-grow: 1; /* Permite que os detalhes ocupem o espaço restante */
+     display: flex;
+     flex-direction: column; /* Empilha os form-groups */
+     gap: 8px; /* Espaço entre os form-groups */
+}
+.equipped-slot .slot-details .form-group {
+     margin-bottom: 0; /* Remover margem inferior em flex items */
+     display: flex;
+     flex-direction: column; /* Empilha label e input */
+     gap: 3px;
+}
+.equipped-slot .slot-details label {
+     font-weight: bold;
+     font-size: 0.9em;
+}
+.equipped-slot .slot-details input[type="text"],
+.equipped-slot .slot-details textarea {
+     width: calc(100% - 16px); /* Ajusta largura */
+}
+.equipped-slot .slot-details input[type="checkbox"] {
+     margin-right: auto; /* Empurra checkbox para a esquerda */
+     transform: scale(1.2); /* Aumenta um pouco */
+}
+
+
+/* Estilos para a lista de inventário completa */
+.inventory-list-container textarea {
+     width: calc(100% - 16px) !important; /* Ocupa largura total */
+     display: block;
+     font-family: var(--fonte-corpo);
+}
+
+.inventory-actions {
+    text-align: center;
+    margin-top: 20px;
+}
+#saveInventoryButton {
+     padding: 12px 25px;
+    font-size: 1.1em;
+    font-family: var(--fonte-titulos);
+    background-color: var(--cor-destaque1); /* Usa cor de destaque 1 para salvar */
+     border: 1px solid #5a3d1e;
+}
+#saveInventoryButton:hover {
+    background-color: #600000;
+}
+
+
+/* --- Estilos Responsivos (dentro do @media) --- */
+@media (min-width: 769px) { /* Layout lado a lado (imagem e detalhes) apenas em telas maiores */
+     .equipped-slot .slot-content {
+         flex-direction: row; /* Imagem e detalhes lado a lado em desktop */
+         align-items: flex-start; /* Alinha o topo */
+     }
+     .equipped-slot .slot-image-area {
+         flex-basis: 150px; /* Largura fixa para a área da imagem em desktop */
+         flex-shrink: 0; /* Impede encolher */
+         flex-grow: 0; /* Impede crescer */
+     }
+      .equipped-item-image {
+         max-height: none; /* Remover limite de altura em desktop se quiser */
+         width: 100%; /* Ocupa a largura da área de imagem */
+         height: auto;
+     }
+     .equipped-slot .image-selector {
+        width: 100%; /* Ocupa a largura da área de imagem */
+        margin-top: 5px;
+     }
+     .equipped-slot .slot-details {
+        flex-grow: 1;
+     }
+}
+
+@media (max-width: 768px) {
+    /* ... (Estilos responsivos existentes para outras seções) ... */
+
+    /* Ajustes para o Inventário em telas menores */
+    .equipped-items-container {
+        grid-template-columns: 1fr; /* Empilha os slots em uma única coluna */
+        gap: 15px;
+    }
+    .equipped-slot {
+         min-height: auto; /* Remover altura mínima */
+    }
+    .equipped-slot .slot-content {
+         flex-direction: column; /* Imagem e detalhes empilhados (padrão, mas reforça) */
+         gap: 10px;
+    }
+    .equipped-slot .slot-image-area {
+         width: 100%; /* Área da imagem ocupa largura total */
+         margin-bottom: 5px; /* Espaço abaixo da imagem */
+    }
+    .equipped-item-image {
+         max-height: 120px; /* Reduz altura máxima em mobile */
+    }
+    .equipped-slot .image-selector {
+        width: 80%; /* Select menor em mobile */
+        max-width: 180px;
+    }
+
+    .equipped-slot .slot-details {
+         gap: 5px; /* Espaço menor entre form-groups em mobile */
+    }
+    .equipped-slot .slot-details .form-group {
+         gap: 2px;
+    }
+     .equipped-slot .slot-details label {
+         font-size: 0.85em; /* Label menor */
+     }
+}
+
+
+/* Para telas com largura máxima de 480px */
+@media (max-width: 480px) {
+    /* ... (Estilos responsivos existentes para outras seções) ... */
+
+    /* Ajustes finos para Inventário em smartphones */
+    .equipped-item-image {
+         max-height: 100px; /* Reduz ainda mais em telas muito pequenas */
+    }
+     .equipped-slot .image-selector {
+        width: 95%; /* Ocupa mais largura */
+     }
+      .equipped-slot .slot-details input[type="text"],
+    .equipped-slot .slot-details textarea {
+         width: calc(100% - 16px) !important; /* Garante largura total */
+         box-sizing: border-box;
+     }
+}
+
+
+/* ============================ */
+/* === ESTILOS RODAPÉ === */
+/* ============================ */
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: var(--cor-bordas);
+    color: var(--cor-fundo-principal);
+    font-size: 0.9em;
+    border-top: 3px solid #5a3d1e;
+    /* position: fixed; */
+    /* bottom: 0; */
+    /* width: 100%; */
+}

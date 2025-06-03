@@ -16,7 +16,9 @@
             <button class="nav-button" data-target="dice-roller-section">Rolador de Dados</button>
             <button class="nav-button" data-target="character-sheet-section">Ficha de Personagem</button>
             <button class="nav-button" data-target="in-game-companion-section">Companion em Jogo</button>
-            <button class="nav-button" data-target="wiki-section">Wiki / Referência</button> 
+            <button class="nav-button" data-target="inventory-section">Inventário</button> <!-- NOVO BOTÃO -->
+            <button class="nav-button" data-target="wiki-section">Wiki / Referência</button>
+            <!-- Futuramente: <button class="nav-button" data-target="spellbook-section">Grimório</button> -->
         </nav>
     </header>
 
@@ -559,6 +561,127 @@
                 </div>
 
             </div>
+        </section>
+
+        <section id="inventory-section" class="hidden-section">
+            <h2>Inventário & Equipamento Equipado</h2>
+            <div class="equipped-items-container"> <!-- Container para Mão Dir, Armadura, Mão Esq -->
+
+                <!-- Mão Direita -->
+                <div class="equipped-slot box" id="main-hand-slot">
+                    <h3>Mão Direita</h3>
+                    <div class="slot-content">
+                        <div class="slot-image-area">
+                            <img src="" alt="Mão Direita" class="equipped-item-image" id="main-hand-image">
+                            <select class="image-selector" id="main-hand-image-select">
+                                <option value="">Selecionar Imagem...</option>
+                                <!-- Opções serão populadas por JS -->
+                            </select>
+                        </div>
+                        <div class="slot-details">
+                            <div class="form-group">
+                                <label for="main-hand-active">Mão Ativa?</label>
+                                <input type="checkbox" id="main-hand-active">
+                            </div>
+                            <div class="form-group">
+                                <label for="main-hand-name">Nome da Arma/Item</label>
+                                <input type="text" id="main-hand-name">
+                            </div>
+                            <div class="form-group">
+                                <label for="main-hand-description">Descrição / Stats</label>
+                                <textarea id="main-hand-description" rows="3"></textarea>
+                            </div>
+                            <!-- Podemos adicionar campos específicos para ataque/dano depois -->
+                            <!-- <div class="form-group">
+                                <label for="main-hand-attack-bonus">Bônus Ataque</label>
+                                <input type="text" id="main-hand-attack-bonus">
+                            </div>
+                            <div class="form-group">
+                                <label for="main-hand-damage">Dano</label>
+                                <input type="text" id="main-hand-damage">
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Armadura -->
+                <div class="equipped-slot box" id="armor-slot">
+                    <h3>Armadura</h3>
+                    <div class="slot-content">
+                        <div class="slot-image-area">
+                            <img src="" alt="Armadura" class="equipped-item-image" id="armor-image">
+                            <select class="image-selector" id="armor-image-select">
+                                <option value="">Selecionar Imagem...</option>
+                                <!-- Opções serão populadas por JS -->
+                            </select>
+                        </div>
+                        <div class="slot-details">
+                            <div class="form-group">
+                                <label for="armor-name">Nome da Armadura</label>
+                                <input type="text" id="armor-name">
+                            </div>
+                            <div class="form-group">
+                                <label for="armor-description">Descrição / Efeitos</label>
+                                <textarea id="armor-description" rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="armor-bonus-prof">Bônus CA / Proficiência</label>
+                                <input type="text" id="armor-bonus-prof">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mão Esquerda -->
+                <div class="equipped-slot box" id="off-hand-slot">
+                    <h3>Mão Esquerda</h3>
+                    <div class="slot-content">
+                        <div class="slot-image-area">
+                            <img src="" alt="Mão Esquerda" class="equipped-item-image" id="off-hand-image">
+                            <select class="image-selector" id="off-hand-image-select">
+                                <option value="">Selecionar Imagem...</option>
+                                <!-- Opções serão populadas por JS -->
+                            </select>
+                        </div>
+                        <div class="slot-details">
+                            <div class="form-group">
+                                <label for="off-hand-active">Mão Ativa?</label>
+                                <input type="checkbox" id="off-hand-active">
+                            </div>
+                            <div class="form-group">
+                                <label for="off-hand-name">Nome da Arma/Item</label>
+                                <input type="text" id="off-hand-name">
+                            </div>
+                            <div class="form-group">
+                                <label for="off-hand-description">Descrição / Stats</label>
+                                <textarea id="off-hand-description" rows="3"></textarea>
+                            </div>
+                            <!-- Podemos adicionar campos específicos para ataque/dano depois -->
+                            <!-- <div class="form-group">
+                                <label for="off-hand-attack-bonus">Bônus Ataque</label>
+                                <input type="text" id="off-hand-attack-bonus">
+                            </div>
+                            <div class="form-group">
+                                <label for="off-hand-damage">Dano</label>
+                                <input type="text" id="off-hand-damage">
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+
+            </div> <!-- Fim de equipped-items-container -->
+
+            <!-- Seção para Inventário Completo (Lista de Itens - Futuro) -->
+            <div class="inventory-list-container box">
+                <h3>Outros Itens no Inventário</h3>
+                <textarea id="inventory-full-list" rows="10" placeholder="Lista completa de itens (peso, quantidade, descrição)..."></textarea>
+            </div>
+
+            <!-- Botão Salvar Inventário -->
+            <div class="inventory-actions">
+                <button id="saveInventoryButton">Salvar Inventário</button>
+            </div>
+
         </section>
 
     </main>
