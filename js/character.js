@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- LISTA DE IMAGENS PREDEFINIDAS ---
     const predefinedImages = [
         { value: '', text: 'Nenhuma Imagem', default: true }, // Opção padrão
-        { value: 'images/sword.png', text: 'Espada Longa' },
+        { value: 'images/sword.jpeg', text: 'Espada Longa' },
         { value: 'images/axe.png', text: 'Machado de Batalha' },
         { value: 'images/light-armor.png', text: 'Armadura Leve' },
         { value: 'images/medium-armor.png', text: 'Armadura Média' },
