@@ -28,7 +28,7 @@ body {
     font-family: var(--fonte-corpo);
     margin: 0;
     /*background-color: var(--cor-fundo-principal);*/
-    background-image: url('../imagens/fundo.jpg'); /* Caminho para sua imagem de fundo */
+    background-image: url('../images/fundo.jpg'); /* Caminho para sua imagem de fundo */
     background-repeat: repeat;
     background-attachment: fixed; /* Fixa o fundo para que não role com o conteúdo */
     color: var(--cor-texto-principal);
